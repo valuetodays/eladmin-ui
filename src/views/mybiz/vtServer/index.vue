@@ -11,7 +11,9 @@
         <label class="el-form-item-label">域名</label>
         <el-input v-model="query.domain" clearable placeholder="域名" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">https状态</label>
-        <el-input v-model="query.httpsEnabled" clearable placeholder="https状态" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+        <!-- <el-input v-model="query.httpsEnabled" clearable placeholder="https状态" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" /> -->
+        <el-radio v-model="query.httpsEnabled" v-for="item in dict.enabled_status" :key="item.id" :label="item.value">{{ item.label }}</el-radio>
+
         <label class="el-form-item-label">镜像地址</label>
         <el-input v-model="query.imageName" clearable placeholder="镜像地址" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">状态</label>
@@ -23,9 +25,6 @@
       <!--表单组件-->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
         <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-          <el-form-item label="ID">
-            <el-input v-model="form.id" style="width: 370px;" />
-          </el-form-item>
           <el-form-item label="名称" prop="name">
             <el-input v-model="form.name" style="width: 370px;" />
           </el-form-item>
@@ -46,18 +45,6 @@
           </el-form-item>
           <el-form-item label="状态" prop="enabled">
             <el-radio v-model="form.enabled" v-for="item in dict.enabled_status" :key="item.id" :label="item.value">{{ item.label }}</el-radio>
-          </el-form-item>
-          <el-form-item label="创建者" prop="createBy">
-            <el-input v-model="form.createBy" style="width: 370px;" />
-          </el-form-item>
-          <el-form-item label="更新者" prop="updateBy">
-            <el-input v-model="form.updateBy" style="width: 370px;" />
-          </el-form-item>
-          <el-form-item label="创建日期" prop="createTime">
-            <el-input v-model="form.createTime" style="width: 370px;" />
-          </el-form-item>
-          <el-form-item label="更新时间" prop="updateTime">
-            <el-input v-model="form.updateTime" style="width: 370px;" />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -153,18 +140,6 @@ export default {
         enabled: [
           { required: true, message: '状态不能为空', trigger: 'blur' }
         ],
-        createBy: [
-          { required: true, message: '创建者不能为空', trigger: 'blur' }
-        ],
-        updateBy: [
-          { required: true, message: '更新者不能为空', trigger: 'blur' }
-        ],
-        createTime: [
-          { required: true, message: '创建日期不能为空', trigger: 'blur' }
-        ],
-        updateTime: [
-          { required: true, message: '更新时间不能为空', trigger: 'blur' }
-        ]
       },
       queryTypeOptions: [
         { key: 'name', display_name: '名称' },
