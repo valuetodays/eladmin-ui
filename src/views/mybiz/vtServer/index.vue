@@ -12,7 +12,10 @@
         <el-input v-model="query.domain" clearable placeholder="域名" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">https状态</label>
         <!-- <el-input v-model="query.httpsEnabled" clearable placeholder="https状态" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" /> -->
-        <el-radio v-model="query.httpsEnabled" v-for="item in dict.enabled_status" :key="item.id" :label="item.value">{{ item.label }}</el-radio>
+        <!-- <el-radio v-model="query.httpsEnabled" >{{ item.label }}</el-radio> -->
+        <el-radio-group v-model="query.httpsEnabled" size="medium">
+          <el-radio-button v-for="item in dict.enabled_status" :key="item.id" :value="item.value" :label="item.label"></el-radio-button>
+        </el-radio-group>
 
         <label class="el-form-item-label">镜像地址</label>
         <el-input v-model="query.imageName" clearable placeholder="镜像地址" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />

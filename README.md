@@ -79,6 +79,7 @@ https://izlzl.com/archives/1219.html
 
 - 感谢 [d15801543974](https://github.com/d15801543974) 大佬提供的基于注解的通用查询方式
 
+- https://element.eleme.io/#/en-US/component/installation
 #### 反馈交流
 
 - QQ交流群：891137268 、947578238、659622532
