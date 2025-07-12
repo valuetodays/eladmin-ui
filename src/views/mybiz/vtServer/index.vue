@@ -9,45 +9,42 @@
         <label class="el-form-item-label">绑定的端口，外网->内网</label>
         <el-input v-model="query.portBindings" clearable placeholder="绑定的端口，外网->内网" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">timezone状态</label>
-          <el-tooltip :content="'Switch value: ' + query.timeZoneEnabled" placement="top">
-          <el-switch
-                  active-color="#13ce66"
-                  active-text="启用"
-                  active-value="1"
-                  inactive-color="#ff4949"
-                  inactive-text="停用"
-                  inactive-value="0"
-                  v-model="query.timeZoneEnabled">
-          </el-switch>
-        </el-tooltip>
+        <el-select v-model="query.timeZoneEnabled" clearable size="small"
+                placeholder="timezone状态"
+                class="filter-item"
+                style="width: 90px"
+                @change="crud.toQuery">
+          <el-option v-for="item in dict.switch_status_1_0"
+                  :key="item.id"
+                  :label="item.label"
+                  :value="item.value" />
+        </el-select>
         <label class="el-form-item-label">域名</label>
         <el-input v-model="query.domain" clearable placeholder="域名" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">https状态</label>
-          <el-tooltip :content="'Switch value: ' + query.httpsEnabled" placement="top">
-          <el-switch
-                  active-color="#13ce66"
-                  active-text="启用"
-                  active-value="1"
-                  inactive-color="#ff4949"
-                  inactive-text="停用"
-                  inactive-value="0"
-                  v-model="query.httpsEnabled">
-          </el-switch>
-        </el-tooltip>
+        <el-select v-model="query.httpsEnabled" clearable size="small"
+                placeholder="https状态"
+                class="filter-item"
+                style="width: 90px"
+                @change="crud.toQuery">
+          <el-option v-for="item in dict.switch_status_1_0"
+                  :key="item.id"
+                  :label="item.label"
+                  :value="item.value" />
+        </el-select>
         <label class="el-form-item-label">镜像名称</label>
         <el-input v-model="query.imageName" clearable placeholder="镜像名称" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">状态</label>
-          <el-tooltip :content="'Switch value: ' + query.enabled" placement="top">
-          <el-switch
-                  active-color="#13ce66"
-                  active-text="启用"
-                  active-value="1"
-                  inactive-color="#ff4949"
-                  inactive-text="停用"
-                  inactive-value="0"
-                  v-model="query.enabled">
-          </el-switch>
-        </el-tooltip>
+        <el-select v-model="query.enabled" clearable size="small"
+                placeholder="状态"
+                class="filter-item"
+                style="width: 90px"
+                @change="crud.toQuery">
+          <el-option v-for="item in dict.switch_status_1_0"
+                  :key="item.id"
+                  :label="item.label"
+                  :value="item.value" />
+        </el-select>
         <rrOperation :crud="crud" />
       </div>
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
@@ -162,7 +159,7 @@ import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
 
-const defaultForm = { id: null, name: null, portBindings: null, timeZoneEnabled: 1, domain: null, httpsEnabled: null, imageName: null, enabled: null, createBy: null, updateBy: null, createTime: null, updateTime: null }
+const defaultForm = { id: null, name: null, portBindings: null, timeZoneEnabled: null, domain: null, httpsEnabled: null, imageName: null, enabled: null, createBy: null, updateBy: null, createTime: null, updateTime: null }
 export default {
   name: 'VtServer',
   components: { pagination, crudOperation, rrOperation, udOperation },
