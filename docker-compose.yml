@@ -1,0 +1,22 @@
+version: "3"
+
+###########
+# this docker-compose.yml intends to let developper to run this project in docker(maybe in another computer), and access by another computer.
+# because different projects use different version of node.
+# this is convinent.
+###########
+
+services:
+  eladmin-web:
+    image: node:12.22.6
+    container_name: eladmin-web
+    ports:
+      - "8013:8013"
+    environment:
+      - LANG=en_US.utf8
+      - TZ=Asia/Shanghai
+    command: /bin/bash  -c " npm i --registry=https://registry.npmmirror.com  &&  npm run dev "
+#    command: /bin/bash  -c "   npm run start "
+    volumes:
+      - ./:/opt/workspace
+    working_dir: /opt/workspace
