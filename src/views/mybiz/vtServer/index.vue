@@ -7,7 +7,17 @@
         <label class="el-form-item-label">名称</label>
         <el-input v-model="query.name" clearable placeholder="名称" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">timezone状态</label>
-        <el-input v-model="query.timeZoneEnabled" clearable placeholder="timezone状态" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+        <el-tooltip :content="'Switch value: ' + query.timeZoneEnabled" placement="top">
+          <el-switch
+                  active-color="#13ce66"
+                  active-text="启用"
+                  active-value="1"
+                  inactive-color="#ff4949"
+                  inactive-text="停用"
+                  inactive-value="0"
+                  v-model="query.timeZoneEnabled">
+          </el-switch>
+        </el-tooltip>        
         <label class="el-form-item-label">域名</label>
         <el-input v-model="query.domain" clearable placeholder="域名" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">https状态</label>
