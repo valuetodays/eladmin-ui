@@ -6,8 +6,10 @@
         <!-- 搜索 -->
         <label class="el-form-item-label">名称</label>
         <el-input v-model="query.name" clearable placeholder="名称" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+        <label class="el-form-item-label">绑定的端口，外网->内网</label>
+        <el-input v-model="query.portBindings" clearable placeholder="绑定的端口，外网->内网" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">timezone状态</label>
-        <el-tooltip :content="'Switch value: ' + query.timeZoneEnabled" placement="top">
+          <el-tooltip :content="'Switch value: ' + query.timeZoneEnabled" placement="top">
           <el-switch
                   active-color="#13ce66"
                   active-text="启用"
@@ -17,20 +19,35 @@
                   inactive-value="0"
                   v-model="query.timeZoneEnabled">
           </el-switch>
-        </el-tooltip>        
+        </el-tooltip>
         <label class="el-form-item-label">域名</label>
         <el-input v-model="query.domain" clearable placeholder="域名" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">https状态</label>
-        <!-- <el-input v-model="query.httpsEnabled" clearable placeholder="https状态" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" /> -->
-        <!-- <el-radio v-model="query.httpsEnabled" >{{ item.label }}</el-radio> -->
-        <el-radio-group v-model="query.httpsEnabled" size="medium">
-          <el-radio-button v-for="item in dict.enabled_status" :key="item.id" :label="item.value">{{ item.label }}</el-radio-button>
-        </el-radio-group>
-
-        <label class="el-form-item-label">镜像地址</label>
-        <el-input v-model="query.imageName" clearable placeholder="镜像地址" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+          <el-tooltip :content="'Switch value: ' + query.httpsEnabled" placement="top">
+          <el-switch
+                  active-color="#13ce66"
+                  active-text="启用"
+                  active-value="1"
+                  inactive-color="#ff4949"
+                  inactive-text="停用"
+                  inactive-value="0"
+                  v-model="query.httpsEnabled">
+          </el-switch>
+        </el-tooltip>
+        <label class="el-form-item-label">镜像名称</label>
+        <el-input v-model="query.imageName" clearable placeholder="镜像名称" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">状态</label>
-        <el-input v-model="query.enabled" clearable placeholder="状态" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+          <el-tooltip :content="'Switch value: ' + query.enabled" placement="top">
+          <el-switch
+                  active-color="#13ce66"
+                  active-text="启用"
+                  active-value="1"
+                  inactive-color="#ff4949"
+                  inactive-text="停用"
+                  inactive-value="0"
+                  v-model="query.enabled">
+          </el-switch>
+        </el-tooltip>
         <rrOperation :crud="crud" />
       </div>
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
@@ -45,19 +62,49 @@
             <el-input v-model="form.portBindings" :rows="3" type="textarea" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="timezone状态" prop="timeZoneEnabled">
-            <el-radio v-model="form.timeZoneEnabled" v-for="item in dict.enabled_status" :key="item.id" :label="item.value">{{ item.label }}</el-radio>
+                <el-tooltip :content="'Switch value: ' + form.timeZoneEnabled" placement="top">
+                  <el-switch
+                          active-color="#13ce66"
+                          active-text="启用"
+                          active-value="1"
+                          inactive-color="#ff4949"
+                          inactive-text="停用"
+                          inactive-value="0"
+                          v-model="form.timeZoneEnabled">
+                  </el-switch>
+                </el-tooltip>
           </el-form-item>
           <el-form-item label="域名" prop="domain">
             <el-input v-model="form.domain" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="https状态" prop="httpsEnabled">
-            <el-radio v-model="form.httpsEnabled" v-for="item in dict.enabled_status" :key="item.id" :label="item.value">{{ item.label }}</el-radio>
+                <el-tooltip :content="'Switch value: ' + form.httpsEnabled" placement="top">
+                  <el-switch
+                          active-color="#13ce66"
+                          active-text="启用"
+                          active-value="1"
+                          inactive-color="#ff4949"
+                          inactive-text="停用"
+                          inactive-value="0"
+                          v-model="form.httpsEnabled">
+                  </el-switch>
+                </el-tooltip>
           </el-form-item>
-          <el-form-item label="镜像地址" prop="imageName">
+          <el-form-item label="镜像名称" prop="imageName">
             <el-input v-model="form.imageName" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="状态" prop="enabled">
-            <el-radio v-model="form.enabled" v-for="item in dict.enabled_status" :key="item.id" :label="item.value">{{ item.label }}</el-radio>
+                <el-tooltip :content="'Switch value: ' + form.enabled" placement="top">
+                  <el-switch
+                          active-color="#13ce66"
+                          active-text="启用"
+                          active-value="1"
+                          inactive-color="#ff4949"
+                          inactive-text="停用"
+                          inactive-value="0"
+                          v-model="form.enabled">
+                  </el-switch>
+                </el-tooltip>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -73,19 +120,19 @@
         <el-table-column prop="portBindings" label="绑定的端口，外网->内网" />
         <el-table-column prop="timeZoneEnabled" label="timezone状态">
           <template slot-scope="scope">
-            {{ dict.label.enabled_status[scope.row.timeZoneEnabled] }}
+            {{ dict.label.switch_status_1_0[scope.row.timeZoneEnabled] }}
           </template>
         </el-table-column>
         <el-table-column prop="domain" label="域名" />
         <el-table-column prop="httpsEnabled" label="https状态">
           <template slot-scope="scope">
-            {{ dict.label.enabled_status[scope.row.httpsEnabled] }}
+            {{ dict.label.switch_status_1_0[scope.row.httpsEnabled] }}
           </template>
         </el-table-column>
-        <el-table-column prop="imageName" label="镜像地址" />
+        <el-table-column prop="imageName" label="镜像名称" />
         <el-table-column prop="enabled" label="状态">
           <template slot-scope="scope">
-            {{ dict.label.enabled_status[scope.row.enabled] }}
+            {{ dict.label.switch_status_1_0[scope.row.enabled] }}
           </template>
         </el-table-column>
         <el-table-column prop="createBy" label="创建者" />
@@ -120,7 +167,7 @@ export default {
   name: 'VtServer',
   components: { pagination, crudOperation, rrOperation, udOperation },
   mixins: [presenter(), header(), form(defaultForm), crud()],
-  dicts: ['enabled_status'],
+  dicts: ['switch_status_1_0'],
   cruds() {
     return CRUD({ title: 'VtServerController', url: 'api/vtServer', idField: 'id', sort: 'id,desc', crudMethod: { ...crudVtServer }})
   },
@@ -132,6 +179,9 @@ export default {
         del: ['admin', 'vtServer:del']
       },
       rules: {
+        id: [
+          { required: true, message: 'ID不能为空', trigger: 'blur' }
+        ],
         name: [
           { required: true, message: '名称不能为空', trigger: 'blur' }
         ],
@@ -148,18 +198,19 @@ export default {
           { required: true, message: 'https状态不能为空', trigger: 'blur' }
         ],
         imageName: [
-          { required: true, message: '镜像地址不能为空', trigger: 'blur' }
+          { required: true, message: '镜像名称不能为空', trigger: 'blur' }
         ],
         enabled: [
           { required: true, message: '状态不能为空', trigger: 'blur' }
-        ],
+        ]
       },
       queryTypeOptions: [
         { key: 'name', display_name: '名称' },
+        { key: 'portBindings', display_name: '绑定的端口，外网->内网' },
         { key: 'timeZoneEnabled', display_name: 'timezone状态' },
         { key: 'domain', display_name: '域名' },
         { key: 'httpsEnabled', display_name: 'https状态' },
-        { key: 'imageName', display_name: '镜像地址' },
+        { key: 'imageName', display_name: '镜像名称' },
         { key: 'enabled', display_name: '状态' }
       ]
     }
