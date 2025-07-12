@@ -22,6 +22,7 @@ module.exports = {
   devServer: {
     host: '0.0.0.0',
     port: port,
+    allowedHosts: 'all', // ← 关键设置，允许所有 Host 请求头
     open: true,
     overlay: {
       warnings: false,
