@@ -68,11 +68,11 @@
                       value="Textarea"
                     />
                     <el-option
-                      label="单选框"
+                      label="单选框Radio"
                       value="Radio"
                     />
                     <el-option
-                      label="单选框"
+                      label="单选框Switch"
                       value="Switch"
                     />
                     <el-option
