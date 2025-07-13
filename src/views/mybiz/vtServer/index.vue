@@ -122,6 +122,8 @@
               :disabled="true"
               active-color="#409EFF"
               inactive-color="#F56C6C"
+              :inactive-value="0"
+              :active-value="1"
             />
             <!-- {{ dict.label.switch_status_1_0[scope.row.timeZoneEnabled] }} -->
           </template>
@@ -134,6 +136,8 @@
               :disabled="true"
               active-color="#409EFF"
               inactive-color="#F56C6C"
+              :inactive-value="0"
+              :active-value="1"
             />
             <!-- {{ dict.label.switch_status_1_0[scope.row.httpsEnabled] }} -->
           </template>
@@ -146,6 +150,8 @@
               :disabled="true"
               active-color="#409EFF"
               inactive-color="#F56C6C"
+              :inactive-value="0"
+              :active-value="1"
             />
             <!-- {{ dict.label.switch_status_1_0[scope.row.enabled] }} -->
           </template>
