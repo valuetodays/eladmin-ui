@@ -63,10 +63,10 @@
                   <el-switch
                           active-color="#13ce66"
                           active-text="启用"
-                          active-value="1"
+                          :active-value="1"
                           inactive-color="#ff4949"
                           inactive-text="停用"
-                          inactive-value="0"
+                          :inactive-value="0"
                           v-model="form.timeZoneEnabled">
                   </el-switch>
                 </el-tooltip>
@@ -79,10 +79,10 @@
                   <el-switch
                           active-color="#13ce66"
                           active-text="启用"
-                          active-value="1"
+                          :active-value="1"
                           inactive-color="#ff4949"
                           inactive-text="停用"
-                          inactive-value="0"
+                          :inactive-value="0"
                           v-model="form.httpsEnabled">
                   </el-switch>
                 </el-tooltip>
@@ -95,10 +95,10 @@
                   <el-switch
                           active-color="#13ce66"
                           active-text="启用"
-                          active-value="1"
+                          :active-value="1"
                           inactive-color="#ff4949"
                           inactive-text="停用"
-                          inactive-value="0"
+                          :inactive-value="0"
                           v-model="form.enabled">
                   </el-switch>
                 </el-tooltip>
@@ -159,7 +159,7 @@ import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
 
-const defaultForm = { id: null, name: null, portBindings: null, timeZoneEnabled: null, domain: null, httpsEnabled: null, imageName: null, enabled: null, createBy: null, updateBy: null, createTime: null, updateTime: null }
+const defaultForm = { id: null, name: null, portBindings: null, timeZoneEnabled: 1, domain: null, httpsEnabled: null, imageName: null, enabled: null, createBy: null, updateBy: null, createTime: null, updateTime: null }
 export default {
   name: 'VtServer',
   components: { pagination, crudOperation, rrOperation, udOperation },
@@ -216,7 +216,13 @@ export default {
     // 钩子：在获取表格数据之前执行，false 则代表不获取数据
     [CRUD.HOOK.beforeRefresh]() {
       return true
-    }
+    },
+    [CRUD.HOOK.beforeToAdd]() {
+      // if (this.form.isTop === '1') {
+      //   this.form.pid = null
+      // }
+      return true
+    },
   }
 }
 </script>
