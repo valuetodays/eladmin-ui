@@ -59,49 +59,49 @@
             <el-input v-model="form.portBindings" :rows="3" type="textarea" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="timezone状态" prop="timeZoneEnabled">
-                <el-tooltip :content="'Switch value: ' + form.timeZoneEnabled" placement="top">
-                  <el-switch
-                          active-color="#13ce66"
-                          active-text="启用"
-                          :active-value="1"
-                          inactive-color="#ff4949"
-                          inactive-text="停用"
-                          :inactive-value="0"
-                          v-model="form.timeZoneEnabled">
-                  </el-switch>
-                </el-tooltip>
+            <el-tooltip :content="'Switch value: ' + form.timeZoneEnabled" placement="top">
+              <el-switch
+                active-color="#13ce66"
+                active-text="启用"
+                :active-value="1"
+                inactive-color="#ff4949"
+                inactive-text="停用"
+                :inactive-value="0"
+                v-model="form.timeZoneEnabled">
+              </el-switch>
+            </el-tooltip>
           </el-form-item>
           <el-form-item label="域名" prop="domain">
             <el-input v-model="form.domain" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="https状态" prop="httpsEnabled">
-                <el-tooltip :content="'Switch value: ' + form.httpsEnabled" placement="top">
-                  <el-switch
-                          active-color="#13ce66"
-                          active-text="启用"
-                          :active-value="1"
-                          inactive-color="#ff4949"
-                          inactive-text="停用"
-                          :inactive-value="0"
-                          v-model="form.httpsEnabled">
-                  </el-switch>
-                </el-tooltip>
+            <el-tooltip :content="'Switch value: ' + form.httpsEnabled" placement="top">
+              <el-switch
+                active-color="#13ce66"
+                active-text="启用"
+                :active-value="1"
+                inactive-color="#ff4949"
+                inactive-text="停用"
+                :inactive-value="0"
+                v-model="form.httpsEnabled">
+              </el-switch>
+            </el-tooltip>
           </el-form-item>
           <el-form-item label="镜像名称" prop="imageName">
             <el-input v-model="form.imageName" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="状态" prop="enabled">
-                <el-tooltip :content="'Switch value: ' + form.enabled" placement="top">
-                  <el-switch
-                          active-color="#13ce66"
-                          active-text="启用"
-                          :active-value="1"
-                          inactive-color="#ff4949"
-                          inactive-text="停用"
-                          :inactive-value="0"
-                          v-model="form.enabled">
-                  </el-switch>
-                </el-tooltip>
+            <el-tooltip :content="'Switch value: ' + form.enabled" placement="top">
+              <el-switch
+                active-color="#13ce66"
+                active-text="启用"
+                :active-value="1"
+                inactive-color="#ff4949"
+                inactive-text="停用"
+                :inactive-value="0"
+                v-model="form.enabled">
+              </el-switch>
+            </el-tooltip>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -117,19 +117,37 @@
         <el-table-column prop="portBindings" label="绑定的端口，外网->内网" />
         <el-table-column prop="timeZoneEnabled" label="timezone状态">
           <template slot-scope="scope">
-            {{ dict.label.switch_status_1_0[scope.row.timeZoneEnabled] }}
+            <el-switch
+              v-model="scope.row.timeZoneEnabled"
+              :disabled="true"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+            />
+            <!-- {{ dict.label.switch_status_1_0[scope.row.timeZoneEnabled] }} -->
           </template>
         </el-table-column>
         <el-table-column prop="domain" label="域名" />
         <el-table-column prop="httpsEnabled" label="https状态">
           <template slot-scope="scope">
-            {{ dict.label.switch_status_1_0[scope.row.httpsEnabled] }}
+            <el-switch
+              v-model="scope.row.httpsEnabled"
+              :disabled="true"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+            />
+            <!-- {{ dict.label.switch_status_1_0[scope.row.httpsEnabled] }} -->
           </template>
         </el-table-column>
         <el-table-column prop="imageName" label="镜像名称" />
         <el-table-column prop="enabled" label="状态">
           <template slot-scope="scope">
-            {{ dict.label.switch_status_1_0[scope.row.enabled] }}
+            <el-switch
+              v-model="scope.row.enabled"
+              :disabled="true"
+              active-color="#409EFF"
+              inactive-color="#F56C6C"
+            />
+            <!-- {{ dict.label.switch_status_1_0[scope.row.enabled] }} -->
           </template>
         </el-table-column>
         <el-table-column prop="createBy" label="创建者" />
