@@ -6,12 +6,12 @@
         <!-- 搜索 -->
         <label class="el-form-item-label">名称</label>
         <el-input v-model="query.name" clearable placeholder="名称" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <div class="el-form-item-label" style="display: flex; align-items: center;">
-          绑定的端口
-          <el-tooltip content="外网 → 内网" placement="top">
+        <el-tooltip content="外网 → 内网" placement="top">
+          <label class="el-form-item-label" style="cursor: help;">
+            绑定的端口
             <i class="el-icon-question" style="margin-left: 4px; cursor: pointer;"></i>
-          </el-tooltip>
-        </div>
+          </label>
+        </el-tooltip>        
         <el-input v-model="query.portBindings" clearable placeholder="绑定的端口" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">timezone状态</label>
         <el-select v-model="query.timeZoneEnabled" clearable size="small"
