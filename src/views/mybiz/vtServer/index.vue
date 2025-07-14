@@ -114,7 +114,16 @@
         <el-table-column type="selection" width="55" />
         <el-table-column prop="id" label="ID" />
         <el-table-column prop="name" label="名称" />
-        <el-table-column prop="portBindings" label="绑定的端口，外网->内网" />
+        <el-table-column prop="portBindings" >
+          <template #header>
+            <span>
+              绑定的端口
+              <el-tooltip content="外网 → 内网" placement="top">
+                <i class="el-icon-question" style="margin-left: 4px; cursor: pointer;"></i>
+              </el-tooltip>
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column prop="timeZoneEnabled" label="timezone状态">
           <template slot-scope="scope">
             <el-tooltip :content="'current value: ' + dict.label.switch_status_1_0[scope.row.timeZoneEnabled]" placement="top">
