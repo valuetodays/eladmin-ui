@@ -117,42 +117,47 @@
         <el-table-column prop="portBindings" label="绑定的端口，外网->内网" />
         <el-table-column prop="timeZoneEnabled" label="timezone状态">
           <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.timeZoneEnabled"
-              :disabled="true"
-              active-color="#409EFF"
-              inactive-color="#F56C6C"
-              :inactive-value="0"
-              :active-value="1"
-            />
+            <el-tooltip :content="'current value: ' + dict.label.switch_status_1_0[scope.row.timeZoneEnabled]" placement="top">
+              <el-switch
+                v-model="scope.row.timeZoneEnabled"
+                :disabled="true"
+                active-color="#409EFF"
+                inactive-color="#F56C6C"
+                :inactive-value="0"
+                :active-value="1"
+              />
+            </el-tooltip>
             <!-- {{ dict.label.switch_status_1_0[scope.row.timeZoneEnabled] }} -->
           </template>
         </el-table-column>
         <el-table-column prop="domain" label="域名" />
         <el-table-column prop="httpsEnabled" label="https状态">
           <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.httpsEnabled"
-              :disabled="true"
-              active-color="#409EFF"
-              inactive-color="#F56C6C"
-              :inactive-value="0"
-              :active-value="1"
-            />
-            <!-- {{ dict.label.switch_status_1_0[scope.row.httpsEnabled] }} -->
+            <el-tooltip :content="'current value: ' + dict.label.switch_status_1_0[scope.row.httpsEnabled]" placement="top">
+              <el-switch
+                v-model="scope.row.httpsEnabled"
+                :disabled="true"
+                active-color="#409EFF"
+                inactive-color="#F56C6C"
+                :inactive-value="0"
+                :active-value="1"
+              />
+            </el-tooltip>
           </template>
         </el-table-column>
         <el-table-column prop="imageName" label="镜像名称" />
         <el-table-column prop="enabled" label="状态">
           <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.enabled"
-              :disabled="true"
-              active-color="#409EFF"
-              inactive-color="#F56C6C"
-              :inactive-value="0"
-              :active-value="1"
-            />
+            <el-tooltip :content="'current value: ' + dict.label.switch_status_1_0[scope.row.enabled]" placement="top">
+              <el-switch
+                v-model="scope.row.enabled"
+                :disabled="true"
+                active-color="#409EFF"
+                inactive-color="#F56C6C"
+                :inactive-value="0"
+                :active-value="1"
+              />
+            </el-tooltip>
             <!-- {{ dict.label.switch_status_1_0[scope.row.enabled] }} -->
           </template>
         </el-table-column>
