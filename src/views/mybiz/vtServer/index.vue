@@ -6,8 +6,13 @@
         <!-- 搜索 -->
         <label class="el-form-item-label">名称</label>
         <el-input v-model="query.name" clearable placeholder="名称" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <label class="el-form-item-label">绑定的端口，外网->内网</label>
-        <el-input v-model="query.portBindings" clearable placeholder="绑定的端口，外网->内网" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
+        <div class="el-form-item-label" style="display: flex; align-items: center;">
+          绑定的端口
+          <el-tooltip content="外网 → 内网" placement="top">
+            <i class="el-icon-question" style="margin-left: 4px; cursor: pointer;"></i>
+          </el-tooltip>
+        </div>
+        <el-input v-model="query.portBindings" clearable placeholder="绑定的端口" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">timezone状态</label>
         <el-select v-model="query.timeZoneEnabled" clearable size="small"
                 placeholder="timezone状态"
@@ -55,7 +60,15 @@
           <el-form-item label="名称" prop="name">
             <el-input v-model="form.name" style="width: 370px;" />
           </el-form-item>
-          <el-form-item label="绑定的端口，外网->内网" prop="portBindings">
+          <el-form-item prop="portBindings">
+            <template #label>
+              <span style="display: inline-flex; align-items: center;">
+                绑定的端口
+                <el-tooltip content="外网 → 内网" placement="top">
+                  <i class="el-icon-question" style="margin-left: 4px; cursor: pointer;"></i>
+                </el-tooltip>
+              </span>
+            </template>
             <el-input v-model="form.portBindings" :rows="3" type="textarea" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="timezone状态" prop="timeZoneEnabled">
