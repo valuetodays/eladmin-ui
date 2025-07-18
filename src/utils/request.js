@@ -19,6 +19,9 @@ service.interceptors.request.use(
       config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
     }
     config.headers['Content-Type'] = 'application/json'
+    // 全部使用post请求
+    config.method = 'post' 
+    config.data = config.data || {}
     return config
   },
   error => {
@@ -29,7 +32,23 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
-    return response.data
+    const dataObj = response.data;
+    // success
+    if (dataObj.code === 0) {
+        return dataObj.data
+    } else if (dataObj.code === 403) {
+        // goto home
+      Notification.error({
+        title: "go home?",
+        duration: 5000
+      })
+    } else {
+      Notification.error({
+        title: dataObj.msg,
+        duration: 5000
+      })
+      return null;
+    }
   },
   error => {
     // 兼容blob下载出错json提示
