@@ -21,7 +21,8 @@ service.interceptors.request.use(
     config.headers['Content-Type'] = 'application/json'
     // 全部使用post请求
     config.method = 'post' 
-    config.data = config.data || {}
+    config.data = config.params || (config.data || {})
+    config.params = undefined
     return config
   },
   error => {

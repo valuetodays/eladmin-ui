@@ -155,6 +155,7 @@
         <!--表格渲染-->
         <el-table ref="table" v-loading="crud.loading" :data="crud.data" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
           <el-table-column :selectable="checkboxT" type="selection" width="55" />
+          <el-table-column :show-overflow-tooltip="true" prop="ID" label="ID" />
           <el-table-column :show-overflow-tooltip="true" prop="username" label="用户名" />
           <el-table-column :show-overflow-tooltip="true" prop="nickName" label="昵称" />
           <el-table-column prop="gender" label="性别" />
@@ -223,7 +224,7 @@ export default {
   name: 'User',
   components: { Treeselect, crudOperation, rrOperation, udOperation, pagination, DateRangePicker },
   cruds() {
-    return CRUD({ title: '用户', url: 'api/users', crudMethod: { ...crudUser }})
+    return CRUD({ title: '用户', url: 'api/users/query', crudMethod: { ...crudUser }})
   },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   // 数据字典

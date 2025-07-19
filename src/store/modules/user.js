@@ -31,6 +31,7 @@ const user = {
       const rememberMe = userInfo.rememberMe
       return new Promise((resolve, reject) => {
         login(userInfo.username, userInfo.password, userInfo.code, userInfo.uuid).then(res => {
+          debugger
           setToken(res.token, rememberMe)
           commit('SET_TOKEN', res.token)
           setUserInfo(res.user, commit)
@@ -38,6 +39,7 @@ const user = {
           commit('SET_LOAD_MENUS', true)
           resolve()
         }).catch(error => {
+          console.log({error})
           reject(error)
         })
       })

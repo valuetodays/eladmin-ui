@@ -3,15 +3,17 @@ import qs from 'qs'
 
 export function initData(url, params) {
   return request({
-    url: url + '?' + qs.stringify(params, { indices: false }),
-    method: 'get'
+    url: url,// + '?' + qs.stringify(params, { indices: false }),
+    method: 'get',
+    params
   })
 }
 
 export function download(url, params) {
   return request({
-    url: url + '?' + qs.stringify(params, { indices: false }),
+    url: url,// + '?' + qs.stringify(params, { indices: false }),
     method: 'get',
+    params,
     responseType: 'blob'
   })
 }

@@ -1,15 +1,15 @@
 import request from '@/utils/request'
 
 export function get(dictName) {
-  const params = {
+  const data = {
     dictName,
     page: 0,
-    size: 9999
+    size: 999
   }
   return request({
-    url: 'api/dictDetail',
+    url: 'api/dictDetail/query',
     method: 'get',
-    params
+    data
   })
 }
 

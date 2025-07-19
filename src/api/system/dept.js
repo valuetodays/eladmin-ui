@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getDepts(params) {
   return request({
-    url: 'api/dept',
+    url: 'api/dept/query',
     method: 'get',
     params
   })
