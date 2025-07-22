@@ -7,7 +7,7 @@ export function getAllJob() {
     enabled: true
   }
   return request({
-    url: 'api/job',
+    url: 'api/job/queryJob',
     method: 'get',
     params
   })
@@ -15,7 +15,7 @@ export function getAllJob() {
 
 export function add(data) {
   return request({
-    url: 'api/job',
+    url: 'api/job/add',
     method: 'post',
     data
   })
@@ -23,7 +23,7 @@ export function add(data) {
 
 export function del(ids) {
   return request({
-    url: 'api/job',
+    url: 'api/job/delete',
     method: 'delete',
     data: ids
   })
@@ -31,7 +31,7 @@ export function del(ids) {
 
 export function edit(data) {
   return request({
-    url: 'api/job',
+    url: 'api/job/edit',
     method: 'put',
     data
   })

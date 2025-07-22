@@ -10,7 +10,7 @@ export function getAll() {
 
 export function add(data) {
   return request({
-    url: 'api/roles',
+    url: 'api/roles/add"',
     method: 'post',
     data
   })
@@ -40,7 +40,7 @@ export function del(ids) {
 
 export function edit(data) {
   return request({
-    url: 'api/roles',
+    url: 'api/roles/edit',
     method: 'put',
     data
   })
@@ -48,7 +48,7 @@ export function edit(data) {
 
 export function editMenu(data) {
   return request({
-    url: 'api/roles/menu',
+    url: 'api/roles/updateRoleMenu',
     method: 'put',
     data
   })

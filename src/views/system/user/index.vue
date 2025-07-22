@@ -86,9 +86,9 @@
             <el-form-item label="邮箱" prop="email">
               <el-input v-model="form.email" />
             </el-form-item>
-            <el-form-item label="部门" prop="dept.id">
+            <el-form-item label="部门" prop="deptId">
               <treeselect
-                v-model="form.dept.id"
+                v-model="form.deptId"
                 :options="depts"
                 :load-options="loadDepts"
                 style="width: 173px"
@@ -155,7 +155,7 @@
         <!--表格渲染-->
         <el-table ref="table" v-loading="crud.loading" :data="crud.data" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
           <el-table-column :selectable="checkboxT" type="selection" width="55" />
-          <el-table-column :show-overflow-tooltip="true" prop="ID" label="ID" />
+          <el-table-column :show-overflow-tooltip="true" prop="id" label="ID" />
           <el-table-column :show-overflow-tooltip="true" prop="username" label="用户名" />
           <el-table-column :show-overflow-tooltip="true" prop="nickName" label="昵称" />
           <el-table-column prop="gender" label="性别" />
@@ -219,7 +219,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
 let userRoles = []
 let userJobs = []
-const defaultForm = { id: null, username: null, nickName: null, gender: '男', email: null, enabled: 'false', roles: [], jobs: [], dept: { id: null }, phone: null }
+const defaultForm = { id: null, username: null, nickName: null, gender: '男', email: null, enabled: 'false', roles: [], jobs: [], deptId:null, dept: { id: null }, phone: null }
 export default {
   name: 'User',
   components: { Treeselect, crudOperation, rrOperation, udOperation, pagination, DateRangePicker },
@@ -270,7 +270,7 @@ export default {
         phone: [
           { required: true, trigger: 'blur', validator: validPhone }
         ],
-        'dept.id': [
+        'deptId': [
           { required: true, message: '部门不能为空', trigger: 'blur' }
         ],
         jobDatas: [
@@ -350,7 +350,7 @@ export default {
       if (form.id == null) {
         this.getDepts()
       } else {
-        this.getSupDepts(form.dept.id)
+        this.getSupDepts(form.deptId)
       }
       this.getRoleLevel()
       this.getJobs()
@@ -363,7 +363,7 @@ export default {
     },
     // 初始化编辑时候的角色与岗位
     [CRUD.HOOK.beforeToEdit](crud, form) {
-      this.getJobs(this.form.dept.id)
+      this.getJobs(this.form.deptId)
       this.jobDatas = []
       this.roleDatas = []
       userRoles = []
