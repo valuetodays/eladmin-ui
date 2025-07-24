@@ -1,7 +1,7 @@
 # for gitee
 kind: pipeline
 type: docker
-name: eladmin-web-ci/cd
+name: eladmin-web-tmp-ci/cd
 
 workspace:
   path: /drone/src
@@ -38,9 +38,9 @@ steps:
       # - npm i
       - npm i --registry=https://registry.npmmirror.com
       - npm run build:prod
-      - mkdir -p /root/workbench_dir/nginx-static/eladmin_static
-      - rm -rf /root/workbench_dir/nginx-static/eladmin_static/*
-      - cp -r /drone/src/dist/* /root/workbench_dir/nginx-static/eladmin_static
+      - mkdir -p /root/workbench_dir/nginx-static/eladmin_tmp_static
+      - rm -rf /root/workbench_dir/nginx-static/eladmin_tmp_static/*
+      - cp -r /drone/src/dist/* /root/workbench_dir/nginx-static/eladmin_tmp_static
   - name: rebuild-cache
     image: drillster/drone-volume-cache
     volumes:
@@ -55,6 +55,7 @@ trigger:
   branch:
     - master
     - dev
+    - dev-quarkus3
   event:
     - push
     - custom
@@ -65,4 +66,4 @@ volumes:
       path: /opt/workbench
   - name: cache_node_module_dir
     host: 
-      path: /tmp/node-module-cache-eladmin-web
+      path: /tmp/node-module-cache-eladmin-tmp-web
