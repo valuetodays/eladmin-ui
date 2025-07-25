@@ -21,6 +21,9 @@ service.interceptors.request.use(
     config.headers['Content-Type'] = 'application/json'
     // 全部使用post请求
     config.method = 'post' 
+    // if (config.url.endsWith("/download")) {
+      // config.method = 'get'
+    // }
     config.data = config.params || (config.data || {})
     config.params = undefined
     return config
@@ -33,6 +36,18 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
+    // 判断是否是文件流
+    const contentType = response.headers['content-type'];
+    if (
+      contentType.includes('application/vnd.openxmlformats-officedocument') || // Office 文件格式
+      contentType.includes('application/pdf') ||                             // PDF
+      contentType.includes('application/msword') ||                          // 旧版 Word
+      contentType.includes('application/octet-stream') ||                    // 通用二进制流
+      contentType.includes('application/zip')                                // ZIP 包等
+    ) {
+      return response.data; // 直接返回 Blob
+    }
+    
     const dataObj = response.data;
     // success
     if (dataObj.code === 0) {
