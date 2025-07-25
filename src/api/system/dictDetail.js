@@ -28,7 +28,7 @@ export function getDictMap(dictName) {
 
 export function add(data) {
   return request({
-    url: 'api/dictDetail',
+    url: 'api/dictDetail/add',
     method: 'post',
     data
   })
@@ -36,14 +36,14 @@ export function add(data) {
 
 export function del(id) {
   return request({
-    url: 'api/dictDetail/' + id,
+    url: 'api/dictDetail/delete/' + id,
     method: 'delete'
   })
 }
 
 export function edit(data) {
   return request({
-    url: 'api/dictDetail',
+    url: 'api/dictDetail/edit',
     method: 'put',
     data
   })

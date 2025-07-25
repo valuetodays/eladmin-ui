@@ -82,7 +82,7 @@ export default {
     presenter(),
     header(),
     form(function() {
-      return Object.assign({ dict: { id: this.dictId }}, defaultForm)
+      return Object.assign({ dictId: this.dictId, dict: { id: this.dictId }}, defaultForm)
     })],
   data() {
     return {
