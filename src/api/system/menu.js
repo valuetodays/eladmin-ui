@@ -9,7 +9,7 @@ export function getMenusTree(pid) {
 
 export function getMenus(params) {
   return request({
-    url: 'api/menus',
+    url: 'api/menus/query',
     method: 'get',
     params
   })
@@ -40,7 +40,7 @@ export function buildMenus() {
 
 export function add(data) {
   return request({
-    url: 'api/menus',
+    url: 'api/menus/add',
     method: 'post',
     data
   })
@@ -48,7 +48,7 @@ export function add(data) {
 
 export function del(ids) {
   return request({
-    url: 'api/menus',
+    url: 'api/menus/delete',
     method: 'delete',
     data: ids
   })
@@ -56,7 +56,7 @@ export function del(ids) {
 
 export function edit(data) {
   return request({
-    url: 'api/menus',
+    url: 'api/menus/edit',
     method: 'put',
     data
   })
