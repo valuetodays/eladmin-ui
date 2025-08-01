@@ -148,7 +148,7 @@ export default {
   mixins: [presenter(), header(), form(defaultForm), crud()],
   dicts: ['switch_status_1_0'],
   cruds() {
-    return CRUD({ title: '国家编码', url: 'api/nationCode', idField: 'id', sort: 'id,desc', crudMethod: { ...crudNationCode }})
+    return CRUD({ title: '国家编码', url: 'api/nationCode/query', idField: 'id', sort: 'id,desc', crudMethod: { ...crudNationCode }})
   },
   data() {
     return {

@@ -217,7 +217,7 @@ export default {
   mixins: [presenter(), header(), form(defaultForm), crud()],
   dicts: ['switch_status_1_0'],
   cruds() {
-    return CRUD({ title: 'VtServerController', url: 'api/vtServer', idField: 'id', sort: 'id,desc', crudMethod: { ...crudVtServer }})
+    return CRUD({ title: 'VtServerController', url: 'api/vtServer/query', idField: 'id', sort: 'id,desc', crudMethod: { ...crudVtServer }})
   },
   data() {
     return {
