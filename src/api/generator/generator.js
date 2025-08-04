@@ -17,9 +17,9 @@ export function generator(tableName, type) {
 
 export function save(data) {
   return request({
-    url: 'api/generator',
+    url: 'api/generator/save',
     data,
-    method: 'put'
+    method: 'post'
   })
 }
 
