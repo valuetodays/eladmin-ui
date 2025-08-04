@@ -9,7 +9,7 @@ export function get(tableName) {
 
 export function update(data) {
   return request({
-    url: 'api/genConfig',
+    url: 'api/genConfig/edit',
     data,
     method: 'put'
   })
