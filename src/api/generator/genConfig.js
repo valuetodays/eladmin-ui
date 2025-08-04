@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function get(tableName) {
   return request({
-    url: 'api/genConfig/' + tableName,
+    url: 'api/genConfig/query/' + tableName,
     method: 'get'
   })
 }
