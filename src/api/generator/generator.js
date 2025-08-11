@@ -17,7 +17,7 @@ export function generator(tableName, type) {
 
 export function downloadZip(tableName, type) {
   return request({
-    url: 'api/downloadZip/' + tableName + '/' + type,
+    url: 'api/generator/downloadZip/' + tableName + '/' + type,
     method: 'post',
     responseType: type === 2 ? 'blob' : ''
   })
