@@ -52,7 +52,7 @@
 
 <script>
 
-import { generator, sync } from '@/api/generator/generator'
+import { generator, sync, downloadZip } from '@/api/generator/generator'
 import { downloadFile } from '@/utils/index'
 import CRUD, { presenter, header } from '@crud/crud'
 import rrOperation from '@crud/RR.operation'
@@ -87,7 +87,7 @@ export default {
     },
     toDownload(tableName) {
       // 打包下载
-      generator(tableName, 2).then(data => {
+      downloadZip(tableName, 2).then(data => {
         downloadFile(data, tableName, 'zip')
       })
     },
