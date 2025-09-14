@@ -22,7 +22,7 @@ steps:
         - ./node_modules
   - name: build
 #     image: node:12.22.6
-      image: node:16.20.2
+    image: node:16.20.2
     environment:
       KEY_A: value_a
       TZ: Asia/Shanghai
