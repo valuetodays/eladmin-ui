@@ -8,7 +8,7 @@ version: "3"
 
 services:
   eladmin-web:
-    image: node:12.22.6
+    image: node:16.20.2
     container_name: eladmin-web
     ports:
       - "8013:8013"
