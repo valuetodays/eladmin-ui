@@ -19,8 +19,8 @@ export default {
   methods: {
     fetchData () {
       dockerStatsApi.chart({}).then(res => {
-        const times = res.data.map(d => d.statDatetime)
-        const values = res.data.map(d => d.memUsage2)
+        const times = res.map(d => d.statDatetime)
+        const values = res.map(d => d.memUsage2)
         this.chart = echarts.init(document.getElementById('memChart'))
         this.chart.setOption({
           title: {
@@ -33,7 +33,7 @@ export default {
         })
       });
     } // end of fetchData()
-    
+
   } // end of methods:
 }
 </script>
