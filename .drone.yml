@@ -6,6 +6,11 @@ name: eladmin-web-tmp-ci/cd
 workspace:
   path: /drone/src
 
+
+node:
+  provider: volcengine
+  xcxg: 4c8g
+
 clone:
   depth: 1
   disable: false
@@ -64,7 +69,7 @@ trigger:
 volumes:
   - name: workbench_dir
     host:
-      path: /opt/workbench
+      path: /root/workbench_dir
   - name: cache_node_module_dir
     host: 
       path: /tmp/node-module-cache-eladmin-tmp-web
