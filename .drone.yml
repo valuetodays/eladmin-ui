@@ -35,6 +35,8 @@ steps:
     volumes:
       - name: workbench_dir
         path: /root/workbench_dir # path in the container
+      - name: opt_1panel_www_dir
+        path: /opt/1panel/www
     commands:
       # use 内置变量 https://docs.drone.io/pipeline/environment/reference/
       - echo ${DRONE_GIT_HTTP_URL} ${DRONE_COMMIT_BRANCH} ${DRONE_BUILD_LINK}
@@ -44,9 +46,12 @@ steps:
       # - npm i
       - npm i --registry=https://registry.npmmirror.com
       - npm run build:prod
-      - mkdir -p /root/workbench_dir/nginx-static/eladmin_tmp_static
-      - rm -rf /root/workbench_dir/nginx-static/eladmin_tmp_static/*
-      - cp -r /drone/src/dist/* /root/workbench_dir/nginx-static/eladmin_tmp_static
+#      - mkdir -p /root/workbench_dir/nginx-static/eladmin_tmp_static
+#      - rm -rf /root/workbench_dir/nginx-static/eladmin_tmp_static/*
+#       - cp -r /drone/src/dist/* /root/workbench_dir/nginx-static/eladmin_tmp_static
+      - mkdir -p /opt/1panel/www/ngxin-static/eladmin_tmp_static
+      - rm -rf /opt/1panel/www/ngxin-static/eladmin_tmp_static/*
+      - cp -r /drone/src/dist/* /opt/1panel/www/ngxin-static/eladmin_tmp_static
   - name: rebuild-cache
     image: drillster/drone-volume-cache
     volumes:
@@ -70,6 +75,9 @@ volumes:
   - name: workbench_dir
     host:
       path: /root/workbench_dir
+  - name: opt_1panel_www_dir
+    host:
+      path: /opt/1panel/www
   - name: cache_node_module_dir
     host: 
       path: /tmp/node-module-cache-eladmin-tmp-web
