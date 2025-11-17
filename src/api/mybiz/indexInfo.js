@@ -12,7 +12,7 @@ export function del(ids) {
   return request({
     url: 'api/indexInfo/delete',
     method: 'post',
-    data: ids
+    data: {ids: ids}
   })
 }
 
@@ -27,8 +27,8 @@ export function saveAllDailyStat(id) {
   return request({
     url: 'api/indexInfo/saveAllDailyStat',
     method: 'post',
-    data
+    data: {id: id}
   })
 }
 
-export default { add, edit, del }
+export default { add, edit, del, saveAllDailyStat}
