@@ -23,5 +23,12 @@ export function edit(data) {
     data
   })
 }
+export function saveAllDailyStat(id) {
+  return request({
+    url: 'api/indexInfo/saveAllDailyStat',
+    method: 'post',
+    data
+  })
+}
 
 export default { add, edit, del }

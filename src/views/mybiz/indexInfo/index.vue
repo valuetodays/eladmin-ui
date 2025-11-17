@@ -8,7 +8,7 @@
         <el-input v-model="query.code" clearable placeholder="编号" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <label class="el-form-item-label">名称</label>
         <el-input v-model="query.name" clearable placeholder="名称" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <label class="el-form-item-label">区域（上海，深圳，北京，香港）</label>
+        <label class="el-form-item-label">区域</label>
         <el-input v-model="query.region" clearable placeholder="区域" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
         <rrOperation :crud="crud" />
       </div>
@@ -30,19 +30,19 @@
             <el-input v-model="form.description" :rows="3" type="textarea" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="发布日期">
-            <el-date-picker v-model="form.releaseDate" type="datetime" style="width: 370px;" />
+            <el-date-picker v-model="form.releaseDate" type="date" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="数据基准日期">
-            <el-date-picker v-model="form.dataBaseDate" type="datetime" style="width: 370px;" />
+            <el-date-picker v-model="form.dataBaseDate" type="date" style="width: 370px;" />
           </el-form-item>
           <el-form-item label="是否常见" prop="popularFlag">
             <el-tooltip :content="'Switch value: ' + form.popularFlag" placement="top">
               <el-switch
                 active-color="#13ce66"
-                active-text="启用"
+                active-text="是"
                 :active-value="true"
                 inactive-color="#ff4949"
-                inactive-text="停用"
+                inactive-text="否"
                 :inactive-value="false"
                 v-model="form.popularFlag">
               </el-switch>
@@ -83,6 +83,13 @@
               :data="scope.row"
               :permission="permission"
             />
+            <el-dropdown size="mini" split-button type="primary">
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item @click.native="saveAllDailyStat(scope.row.id)">
+                  同步所有日k数据
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </template>
         </el-table-column>
       </el-table>
@@ -100,14 +107,14 @@ import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
 
-const defaultForm = { id: null, code: null, name: null, region: null, description: null, releaseDate: null, dataBaseDate: null, popularFlag: null, suggestEtfs: null, createTime: null, updateTime: null, createUserId: null, updateUserId: null }
+const defaultForm = { id: null, code: null, name: null, region: null, description: null, releaseDate: null, dataBaseDate: null, popularFlag: false, suggestEtfs: null, createTime: null, updateTime: null, createUserId: null, updateUserId: null }
 export default {
   name: 'IndexInfo',
   components: { pagination, crudOperation, rrOperation, udOperation },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   dicts: ['switch_status_1_0'],
   cruds() {
-    return CRUD({ title: 'dd', url: 'api/indexInfo/query', idField: 'id', sort: 'id,desc', crudMethod: { ...crudIndexInfo }})
+    return CRUD({ title: '指数信息', url: 'api/indexInfo/query', idField: 'id', sort: 'id,desc', crudMethod: { ...crudIndexInfo }})
   },
   data() {
     return {
@@ -125,9 +132,6 @@ export default {
         ],
         region: [
           { required: true, message: '区域不能为空', trigger: 'blur' }
-        ],
-        popularFlag: [
-          { required: true, message: '是否常见不能为空', trigger: 'blur' }
         ]
       },
       queryTypeOptions: [
@@ -145,6 +149,13 @@ export default {
     [CRUD.HOOK.beforeToAdd]() {
       return true
     },
+    saveAllDailyStat() {
+      crudIndexInfo.saveAllDailyStat().then(response => {
+        this.$message.success('操作成功，请稍后查看同步结果')
+      }).catch(() => {
+        this.$message.error('操作失败')
+      })
+    }
   }
 }
 </script>
