@@ -173,7 +173,7 @@
             </el-form-item>
             <el-form-item label="接口名称" prop="apiAlias">
               <el-input v-model="form.apiAlias" style="width: 40%" />
-              <span style="color: #C0C0C0;margin-left: 10px;">接口的名称，用于控制器与接口文档中</span>
+              <span style="color: #C0C0C0;margin-left: 10px;">接口的名称，用于控制器与接口文档中，如用户服务</span>
             </el-form-item>
             <el-form-item label="前端路径" prop="path">
               <el-input v-model="form.path" style="width: 40%" />
@@ -185,7 +185,7 @@
             <!--            </el-form-item>-->
             <el-form-item label="去表前缀" prop="prefix">
               <el-input v-model="form.prefix" placeholder="默认不去除表前缀" style="width: 40%" />
-              <span style="color: #C0C0C0;margin-left: 10px;">默认不去除表前缀，可自定义</span>
+              <span style="color: #C0C0C0;margin-left: 10px;">默认不去除表前缀，可自定义，如f_</span>
             </el-form-item>
             <el-form-item label="是否覆盖" prop="cover">
               <el-radio-group v-model="form.cover" size="mini" style="width: 40%">
