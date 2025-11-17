@@ -30,5 +30,12 @@ export function saveAllDailyStat(id) {
     data: {id: id}
   })
 }
+export function saveLatest30Days() {
+  return request({
+    url: 'api/indexInfo/saveLatest30Days',
+    method: 'post',
+    data: { }
+  })
+}
 
-export default { add, edit, del, saveAllDailyStat}
+export default { add, edit, del, saveAllDailyStat, saveLatest30Days}

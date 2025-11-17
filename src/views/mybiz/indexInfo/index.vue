@@ -13,7 +13,17 @@
         <rrOperation :crud="crud" />
       </div>
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
-      <crudOperation :permission="permission" />
+      <crudOperation :permission="permission" >
+        <el-button
+          slot="right"
+          v-permission="['admin','indexInfo:saveLatest30Days']"
+          class="filter-item"
+          size="mini"
+          type="primary"
+          @click="saveLatest30Days()"
+        >同步popular记录的近30天行情数据
+        </el-button>
+      </crudOperation>
       <!--表单组件-->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
         <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
@@ -151,7 +161,14 @@ export default {
     },
     saveAllDailyStat(id) {
       crudIndexInfo.saveAllDailyStat(id).then(response => {
-        this.$message.success('操作成功，请稍后查看同步结果')
+        this.$message.success('发起成功，请稍后查看同步结果')
+      }).catch(() => {
+        this.$message.error('操作失败')
+      })
+    },
+    saveLatest30Days() {
+      crudIndexInfo.saveLatest30Days().then(response => {
+        this.$message.success('发起成功，请稍后查看同步结果')
       }).catch(() => {
         this.$message.error('操作失败')
       })
