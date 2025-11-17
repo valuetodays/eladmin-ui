@@ -149,8 +149,8 @@ export default {
     [CRUD.HOOK.beforeToAdd]() {
       return true
     },
-    saveAllDailyStat() {
-      crudIndexInfo.saveAllDailyStat().then(response => {
+    saveAllDailyStat(id) {
+      crudIndexInfo.saveAllDailyStat(id).then(response => {
         this.$message.success('操作成功，请稍后查看同步结果')
       }).catch(() => {
         this.$message.error('操作失败')
