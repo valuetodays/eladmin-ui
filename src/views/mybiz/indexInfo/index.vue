@@ -23,6 +23,15 @@
           @click="saveLatest30Days()"
         >同步popular记录的近30天行情数据
         </el-button>
+        <el-button
+          slot="right"
+          v-permission="['admin','stockDailyQuote:computeLatest30DaysCci']"
+          class="filter-item"
+          size="mini"
+          type="primary"
+          @click="computeLatest30DaysCci()"
+        >计算popular记录的近30天的Cci
+        </el-button>
       </crudOperation>
       <!--表单组件-->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
@@ -102,6 +111,9 @@
                 <el-dropdown-item @click.native="updateMissingFields(scope.row.id)">
                   同步指数信息
                 </el-dropdown-item>
+                <el-dropdown-item @click.native="computeAllCciById(scope.row.id)">
+                  计算所有cci
+                </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -180,6 +192,20 @@ export default {
     saveLatest30Days() {
       crudIndexInfo.saveLatest30Days().then(response => {
         this.$message.success('发起成功，请稍后查看同步结果')
+      }).catch(() => {
+        this.$message.error('操作失败')
+      })
+    },
+    computeAllCciById(id) {
+      crudIndexInfo.computeAllCciById(id).then(response => {
+        this.$message.success('发起计算一个指数的所有cci，请稍后查看同步结果')
+      }).catch(() => {
+        this.$message.error('操作失败')
+      })
+    },
+    computeLatest30DaysCci() {
+      crudIndexInfo.computeAllCciById().then(response => {
+        this.$message.success('发起计算近30天cci，请稍后查看同步结果')
       }).catch(() => {
         this.$message.error('操作失败')
       })

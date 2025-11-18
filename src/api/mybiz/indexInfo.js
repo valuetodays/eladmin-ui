@@ -12,7 +12,7 @@ export function del(ids) {
   return request({
     url: 'api/indexInfo/delete',
     method: 'post',
-    data: {ids: ids}
+    data: { ids: ids }
   })
 }
 
@@ -28,7 +28,7 @@ export function updateMissingFields(id) {
   return request({
     url: 'api/indexInfo/updateMissingFields',
     method: 'post',
-    data: {id: id}
+    data: { id: id }
   })
 }
 
@@ -36,7 +36,7 @@ export function saveAllDailyStat(id) {
   return request({
     url: 'api/indexInfo/saveAllDailyStat',
     method: 'post',
-    data: {id: id}
+    data: { id: id }
   })
 }
 
@@ -44,8 +44,24 @@ export function saveLatest30Days() {
   return request({
     url: 'api/indexInfo/saveLatest30Days',
     method: 'post',
-    data: { }
+    data: {}
   })
 }
 
-export default { add, edit, del, updateMissingFields, saveAllDailyStat, saveLatest30Days}
+export function computeAllCciById(id) {
+  return request({
+    url: 'api/indexInfo/computeAllCciById',
+    method: 'post',
+    data: { id: id }
+  })
+}
+
+export function computeLatest30DaysCci() {
+  return request({
+    url: 'api/indexInfo/computeLatest30DaysCci',
+    method: 'post',
+    data: {}
+  })
+}
+
+export default { add, edit, del, updateMissingFields, saveAllDailyStat, saveLatest30Days, computeAllCciById, computeLatest30DaysCci }
