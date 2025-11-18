@@ -93,7 +93,7 @@
               :data="scope.row"
               :permission="permission"
             />
-            <el-dropdown size="mini" split-button type="primary">
+            <el-dropdown size="mini" type="primary">
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item @click.native="saveAllDailyStat(scope.row.id)">
                   同步所有日k数据
