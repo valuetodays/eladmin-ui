@@ -23,6 +23,15 @@ export function edit(data) {
     data
   })
 }
+
+export function updateMissingFields(id) {
+  return request({
+    url: 'api/indexInfo/updateMissingFields',
+    method: 'post',
+    data: {id: id}
+  })
+}
+
 export function saveAllDailyStat(id) {
   return request({
     url: 'api/indexInfo/saveAllDailyStat',
@@ -30,6 +39,7 @@ export function saveAllDailyStat(id) {
     data: {id: id}
   })
 }
+
 export function saveLatest30Days() {
   return request({
     url: 'api/indexInfo/saveLatest30Days',

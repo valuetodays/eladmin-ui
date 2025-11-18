@@ -98,6 +98,9 @@
                 <el-dropdown-item @click.native="saveAllDailyStat(scope.row.id)">
                   同步所有日k数据
                 </el-dropdown-item>
+                <el-dropdown-item @click.native="updateMissingFields(scope.row.id)">
+                  同步指数信息
+                </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -158,6 +161,13 @@ export default {
     },
     [CRUD.HOOK.beforeToAdd]() {
       return true
+    },
+    updateMissingFields(id) {
+      crudIndexInfo.updateMissingFields(id).then(response => {
+        this.$message.success('操作成功')
+      }).catch(() => {
+        this.$message.error('操作失败')
+      })
     },
     saveAllDailyStat(id) {
       crudIndexInfo.saveAllDailyStat(id).then(response => {
