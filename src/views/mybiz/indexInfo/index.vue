@@ -204,7 +204,7 @@ export default {
       })
     },
     computeLatest30DaysCci() {
-      crudIndexInfo.computeAllCciById().then(response => {
+      crudIndexInfo.computeLatest30DaysCci().then(response => {
         this.$message.success('发起计算近30天cci，请稍后查看同步结果')
       }).catch(() => {
         this.$message.error('操作失败')

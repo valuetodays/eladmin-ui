@@ -50,7 +50,7 @@ export function saveLatest30Days() {
 
 export function computeAllCciById(id) {
   return request({
-    url: 'api/indexInfo/computeAllCciById',
+    url: 'api/stockDailyQuote/computeAllCciById',
     method: 'post',
     data: { id: id }
   })
@@ -58,7 +58,7 @@ export function computeAllCciById(id) {
 
 export function computeLatest30DaysCci() {
   return request({
-    url: 'api/indexInfo/computeLatest30DaysCci',
+    url: 'api/stockDailyQuote/computeLatest30DaysCci',
     method: 'post',
     data: {}
   })
