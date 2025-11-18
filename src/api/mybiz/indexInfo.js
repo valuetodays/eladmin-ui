@@ -48,4 +48,4 @@ export function saveLatest30Days() {
   })
 }
 
-export default { add, edit, del, saveAllDailyStat, saveLatest30Days}
+export default { add, edit, del, updateMissingFields, saveAllDailyStat, saveLatest30Days}
