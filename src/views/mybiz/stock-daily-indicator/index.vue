@@ -30,6 +30,7 @@
       <div>
         <el-date-picker v-model="cci14DataQueryForm.statDate" type="date" placeholder="请选择日期" value-format="yyyy-MM-dd"
           clearable style="width: 185px;" class="filter-item" @change="cci14DataQuery" />
+        <el-button size="mini" type="primary" @click="downloadCci14DataAsCsv()">下载表格为csv</el-button>
       </div>
       <el-table ref="cci14Table" v-loading="cci14Dataloading" :data="cci14Data" size="small" height="400"
         style="width: 100%;">
@@ -101,6 +102,25 @@ export default {
         this.$message.error('操作失败')
         this.cci14Dataloading = false
       })
+    },
+    downloadCci14DataAsCsv() {
+      if (!this.cci14Data || this.cci14Data.length === 0) return;
+
+      const header = ['Code', 'Name', 'Date', 'CCI14'];
+      const rows = this.cci14Data.map(item => [item.code, item.name, item.statDate, item.cci14]);
+
+      let csvContent = header.join(',') + '\n';
+      rows.forEach(row => {
+        csvContent += row.join(',') + '\n';
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.setAttribute('download', `cci14Data.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   }
 }
