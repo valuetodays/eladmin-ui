@@ -4,28 +4,21 @@
     <div class="head-container">
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
       <crudOperation :permission="permission">
-        <el-button
-          slot="right"
-          v-permission="['admin','stockDailyIndicator:getAllCciLt_100ByStatDate']"
-          class="filter-item"
-          size="mini"
-          type="primary"
-          @click="toggleCci14DataDlg()"
-        >获取指定时间内cci14小于-100的数据
-        </el-button>        
+        <el-button slot="right" v-permission="['admin', 'stockDailyIndicator:getAllCciLt_100ByStatDate']"
+          class="filter-item" size="mini" type="primary" @click="toggleCci14DataDlg()">获取指定时间内cci14小于-100的数据
+        </el-button>
       </crudOperation>
       <!--表格渲染-->
-      <el-table ref="table" v-loading="crud.loading" :data="crud.data" size="small" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
+      <el-table ref="table" v-loading="crud.loading" :data="crud.data" size="small" style="width: 100%;"
+        @selection-change="crud.selectionChangeHandler">
         <el-table-column type="selection" width="55" />
         <el-table-column prop="code" label="code" />
         <el-table-column prop="statDate" label="统计日期" />
         <el-table-column prop="cci14" label="cci14" />
-        <el-table-column v-if="checkPer(['admin','stockDailyIndicator:edit','stockDailyIndicator:del'])" label="操作" width="150px" align="center">
+        <el-table-column v-if="checkPer(['admin', 'stockDailyIndicator:edit', 'stockDailyIndicator:del'])" label="操作"
+          width="150px" align="center">
           <template slot-scope="scope">
-            <udOperation
-              :data="scope.row"
-              :permission="permission"
-            />
+            <udOperation :data="scope.row" :permission="permission" />
           </template>
         </el-table-column>
       </el-table>
@@ -35,9 +28,11 @@
 
     <el-dialog :close-on-click-modal="false" :visible.sync="showCci14DataDlg" title="show cci14Data" width="500px">
       <div>
-        <el-input v-model="cci14DataQueryForm.statDate" clearable placeholder="日期" style="width: 185px;" class="filter-item" @keyup.enter.native="cci14DataQuery" />
+        <el-date-picker v-model="cci14DataQueryForm.statDate" type="date" placeholder="请选择日期" value-format="yyyy-MM-dd"
+          clearable style="width: 185px;" class="filter-item" @change="cci14DataQuery" />
       </div>
-      <el-table ref="cci14Table" v-loading="cci14Dataloading" :data="cci14Data" size="small"   height="400" style="width: 100%;">
+      <el-table ref="cci14Table" v-loading="cci14Dataloading" :data="cci14Data" size="small" height="400"
+        style="width: 100%;">
         <el-table-column prop="code" label="code" />
         <el-table-column prop="name" label="name" />
         <el-table-column prop="statDate" label="统计日期" />
@@ -61,7 +56,7 @@ export default {
   components: { pagination, crudOperation, rrOperation, udOperation },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   cruds() {
-    return CRUD({ title: '股票每日指标', url: 'api/stockDailyIndicator/query', idField: 'statDate', sort: 'statDate,desc', crudMethod: { ...crudStockDailyIndicator }})
+    return CRUD({ title: '股票每日指标', url: 'api/stockDailyIndicator/query', idField: 'statDate', sort: 'statDate,desc', crudMethod: { ...crudStockDailyIndicator } })
   },
   data() {
     return {
@@ -111,6 +106,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
