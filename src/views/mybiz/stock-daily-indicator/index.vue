@@ -99,8 +99,8 @@ export default {
     },
     cci14DataQuery() {
       this.cci14Dataloading = true
-      crudStockDailyIndicator.getAllCciLt_100ByStatDate(this.cci14DataQueryForm).then(response => {
-        this.cci14Data = response
+      crudStockDailyIndicator.getAllCciLt_100ByStatDate(this.cci14DataQueryForm).then(data => {
+        this.cci14Data = data
         this.cci14Dataloading = false
       }).catch(() => {
         this.$message.error('操作失败')
