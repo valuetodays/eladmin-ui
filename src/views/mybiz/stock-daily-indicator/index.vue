@@ -144,8 +144,8 @@ export default {
       const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
       saveAs(new Blob([wbout], { type: 'application/octet-stream' }), `cci14Data.xlsx`)
     }
-  }
-  }
+  } // end of methods
+  
 }
 </script>
 
