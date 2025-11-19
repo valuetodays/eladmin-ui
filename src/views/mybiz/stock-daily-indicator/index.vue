@@ -37,7 +37,7 @@
       <div>
         <el-input v-model="cci14DataQueryForm.statDate" clearable placeholder="日期" style="width: 185px;" class="filter-item" @keyup.enter.native="cci14DataQuery" />
       </div>
-      <el-table ref="cci14Table" v-loading="cci14Dataloading" :data="cci14Data" size="small" style="width: 100%;">
+      <el-table ref="cci14Table" v-loading="cci14Dataloading" :data="cci14Data" size="small" style="width: 100%;  height: 400px;">
         <el-table-column prop="code" label="code" />
         <el-table-column prop="name" label="name" />
         <el-table-column prop="statDate" label="统计日期" />
