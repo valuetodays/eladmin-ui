@@ -64,7 +64,7 @@ export default {
       
       if (targetUrl) {
         console.log(targetUrl)
-        this.iframeUrl = deodeURIComponent(targetUrl);
+        this.iframeUrl = decodeURIComponent(targetUrl);
         console.log('iframeUrl', this.iframeUrl)
         // 2. 动态修改路由的 meta 信息（关键步骤）
         // 这样做可以让多标签页的标题和图标正确显示
