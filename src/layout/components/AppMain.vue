@@ -63,9 +63,9 @@ export default {
       const targetUrl = route.query.url;
       
       if (targetUrl) {
-        debugger
-        this.iframeUrl = encodeURIComponent(targetUrl);
-
+        console.log(targetUrl)
+        this.iframeUrl = deodeURIComponent(targetUrl);
+        console.log('iframeUrl', this.iframeUrl)
         // 2. 动态修改路由的 meta 信息（关键步骤）
         // 这样做可以让多标签页的标题和图标正确显示
         // 注意：这里我们假设菜单配置时，将标题和图标也通过参数传递过来，例如：
