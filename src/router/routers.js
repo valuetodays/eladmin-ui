@@ -57,7 +57,18 @@ export const constantRouterMap = [
         meta: { title: '个人中心' }
       }
     ]
-  }
+  },
+  {
+    path: '/iframe-page',
+    name: 'IframePage', // 路由名称必须唯一
+    component: () => import('@/layout'),
+    meta: {
+      title: '外部页面', // 通用标题，会被动态替换
+      icon: 'el-icon-link', // 通用图标，会被动态替换
+      isExternal: true, // 标记为 iframe 页面
+      url: '' // 这里留空，将从 URL 参数中获取
+    }
+  },
 ]
 
 export default new Router({
