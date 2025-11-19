@@ -33,7 +33,7 @@
       <pagination />
     </div>
 
-    <el-dialog :close-on-click-modal="false" :visible.sync="showCci14DataDlg" title="show cci14 and indexInfo" width="500px">
+    <el-dialog :close-on-click-modal="false" :visible.sync="showCci14DataDlg" title="show cci14Data" width="500px">
       <div>
         <el-input v-model="cci14DataQueryForm.statDate" clearable placeholder="日期" style="width: 185px;" class="filter-item" @keyup.enter.native="cci14DataQuery" />
       </div>
@@ -43,9 +43,6 @@
         <el-table-column prop="statDate" label="统计日期" />
         <el-table-column prop="cci14" label="cci14" />
       </el-table>
-      <div slot="footer" class="dialog-footer">
-        <el-button type="text" @click="toggleCci14DataDlg">关闭</el-button>
-      </div>
     </el-dialog>
   </div>
 </template>
@@ -101,10 +98,19 @@ export default {
       this.showCci14DataDlg = !this.showCci14DataDlg
     },
     cci14DataQuery() {
+      this.cci14Dataloading = true
       crudStockDailyIndicator.getAllCciLt_100ByStatDate(this.cci14DataQueryForm).then(response => {
         console.log("response:", response)
+        let respData = response.data
+        if (respData.code === 0) {
+          this.cci14Data = respData.data
+        } else {
+          this.$message.error(respData.msg)
+        }
+        this.cci14Dataloading = false
       }).catch(() => {
         this.$message.error('操作失败')
+        this.cci14Dataloading = false
       })
     }
   }
