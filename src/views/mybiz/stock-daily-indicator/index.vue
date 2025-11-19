@@ -101,12 +101,7 @@ export default {
       this.cci14Dataloading = true
       crudStockDailyIndicator.getAllCciLt_100ByStatDate(this.cci14DataQueryForm).then(response => {
         console.log("response:", response)
-        let respData = response.data
-        if (respData.code === 0) {
-          this.cci14Data = respData.data
-        } else {
-          this.$message.error(respData.msg)
-        }
+        this.cci14Data = response.data
         this.cci14Dataloading = false
       }).catch(() => {
         this.$message.error('操作失败')
