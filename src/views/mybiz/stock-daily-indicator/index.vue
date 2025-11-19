@@ -30,7 +30,7 @@
       <div>
         <el-date-picker v-model="cci14DataQueryForm.statDate" type="date" placeholder="请选择日期" value-format="yyyy-MM-dd"
           clearable style="width: 185px;" class="filter-item" @change="cci14DataQuery" />
-        <el-button size="mini" type="primary" @click="downloadCci14DataAsCsv()">下载表格为csv</el-button>
+        <el-button size="mini" type="primary" @click="downloadAsExcel()" :disabled="cci14Data.length === 0">下载为Excel</el-button>
       </div>
       <el-table ref="cci14Table" v-loading="cci14Dataloading" :data="cci14Data" size="small" height="400"
         style="width: 100%;">
@@ -50,6 +50,8 @@ import rrOperation from '@crud/RR.operation'
 import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
+import XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
 
 const defaultForm = { code: null, statDate: null, cci14: null }
 export default {
@@ -121,7 +123,28 @@ export default {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    },
+     // 下载 Excel
+    downloadAsExcel() {
+      if (!this.cci14Data || this.cci14Data.length === 0) return;
+
+      // 生成 worksheet
+      const ws = XLSX.utils.json_to_sheet(this.cci14Data, { header: ["code","name","statDate","cci14"] })
+
+      // 强制 code 列为文本，防止 Excel 去掉前导零
+      Object.keys(ws).forEach(cell => {
+        if (cell.startsWith('A') && cell !== 'A1') ws[cell].z = '@'
+      })
+
+      // 创建 workbook 并追加 worksheet
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, ws, "CCI14")
+
+      // 导出 Excel
+      const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
+      saveAs(new Blob([wbout], { type: 'application/octet-stream' }), `cci14Data.xlsx`)
     }
+  }
   }
 }
 </script>
