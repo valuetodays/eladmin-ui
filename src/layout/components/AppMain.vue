@@ -63,6 +63,7 @@ export default {
       const targetUrl = route.query.url;
       
       if (targetUrl) {
+        debugger
         this.iframeUrl = encodeURIComponent(targetUrl);
 
         // 2. 动态修改路由的 meta 信息（关键步骤）
