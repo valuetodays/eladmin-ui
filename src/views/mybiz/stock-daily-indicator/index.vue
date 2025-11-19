@@ -142,7 +142,8 @@ export default {
 
       // 导出 Excel
       const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-      saveAs(new Blob([wbout], { type: 'application/octet-stream' }), `cci14Data.xlsx`)
+      const fileName = 'cci14Data-' + this.cci14DataQueryForm.statDate + '.xlsx'
+      saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName)
     }
   } // end of methods
   
