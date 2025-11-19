@@ -50,7 +50,7 @@ import rrOperation from '@crud/RR.operation'
 import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
-import XLSX from 'xlsx'
+import * as XLSX from 'xlsx'
 import { saveAs } from 'file-saver'
 
 const defaultForm = { code: null, statDate: null, cci14: null }
