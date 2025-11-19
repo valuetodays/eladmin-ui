@@ -5,7 +5,8 @@ import Layout from '../layout/index'
 Vue.use(Router)
 
 export const constantRouterMap = [
-  { path: '/login',
+  { 
+    path: '/login',
     meta: { title: '登录', noCache: true },
     component: (resolve) => require(['@/views/login'], resolve),
     hidden: true
@@ -61,7 +62,8 @@ export const constantRouterMap = [
   {
     path: '/iframe-page',
     name: 'IframePage', // 路由名称必须唯一
-    component: () => import('@/layout'),
+    component: Layout,
+    hidden: true,
     meta: {
       title: '外部页面', // 通用标题，会被动态替换
       icon: 'el-icon-link', // 通用图标，会被动态替换

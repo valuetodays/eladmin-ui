@@ -63,7 +63,7 @@ export default {
       const targetUrl = route.query.url;
       
       if (targetUrl) {
-        this.iframeUrl = targetUrl;
+        this.iframeUrl = encodeURIComponent(targetUrl);
 
         // 2. 动态修改路由的 meta 信息（关键步骤）
         // 这样做可以让多标签页的标题和图标正确显示
