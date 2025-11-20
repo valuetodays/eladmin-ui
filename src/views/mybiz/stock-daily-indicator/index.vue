@@ -36,7 +36,7 @@
         style="width: 100%;">
         <el-table-column prop="code" label="code" sortable="custom" />
         <el-table-column prop="name" label="name" />
-        <el-table-column prop="statDate" label="统计日期" sortable="custom"/>
+        <el-table-column prop="statDate" label="统计日期" />
         <el-table-column prop="cci14" label="cci14" sortable="custom"/>
       </el-table>
     </el-dialog>
