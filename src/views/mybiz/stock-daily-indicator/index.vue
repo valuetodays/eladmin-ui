@@ -32,12 +32,12 @@
           clearable style="width: 185px;" class="filter-item" @change="cci14DataQuery" />
         <el-button size="mini" type="primary" @click="downloadAsExcel()" :disabled="cci14Data.length === 0">下载为Excel</el-button>
       </div>
-      <el-table ref="cci14Table" v-loading="cci14Dataloading" :data="cci14Data" size="small" height="400"
+      <el-table ref="cci14Table" v-loading="cci14Dataloading" :data="cci14Data" size="small" height="400"  @sort-change="handleSortChange"
         style="width: 100%;">
-        <el-table-column prop="code" label="code" />
+        <el-table-column prop="code" label="code" sortable="custom" />
         <el-table-column prop="name" label="name" />
-        <el-table-column prop="statDate" label="统计日期" />
-        <el-table-column prop="cci14" label="cci14" />
+        <el-table-column prop="statDate" label="统计日期" sortable="custom"/>
+        <el-table-column prop="cci14" label="cci14" sortable="custom"/>
       </el-table>
     </el-dialog>
   </div>
@@ -144,7 +144,22 @@ export default {
       const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
       const fileName = 'cci14Data-' + this.cci14DataQueryForm.statDate + '.xlsx'
       saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName)
+    }, // end of downloadAsExcel()
+    handleSortChange({ prop, order }) {
+      if (!order) return; // 取消排序
+      this.cci14Data.sort((a, b) => {
+        let valA = a[prop];
+        let valB = b[prop];
+        if (typeof valA === 'string') valA = valA.toLowerCase();
+        if (typeof valB === 'string') valB = valB.toLowerCase();
+        if (order === 'ascending') {
+          return valA > valB ? 1 : -1;
+        } else {
+          return valA < valB ? 1 : -1;
+        }
+      });
     }
+
   } // end of methods
   
 }
