@@ -6,7 +6,6 @@ on:
       - master
       - main
       - dev
-      - dev-quarkus3
 
 jobs:
   build:
