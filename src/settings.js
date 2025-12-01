@@ -2,7 +2,7 @@ module.exports = {
   /**
    * @description 网站标题
    */
-  title: 'ELADMIN',
+  title: 'PORTAL',
   /**
    * @description 是否显示 tagsView
    */
@@ -22,7 +22,7 @@ module.exports = {
   /**
    * @description token key
    */
-  TokenKey: 'ELADMIN-TOEKN',
+  TokenKey: 'PORTAL-VT-TOEKN',
   /**
    * @description 请求超时时间，毫秒（默认2分钟）
    */
