@@ -1,7 +1,7 @@
 # for gitee
 kind: pipeline
 type: docker
-name: eladmin-web-tmp-ci/cd
+name: portal-ui-ci/cd
 
 workspace:
   path: /drone/src
@@ -46,12 +46,9 @@ steps:
       # - npm i
       - npm i --registry=https://registry.npmmirror.com
       - npm run build:prod
-#      - mkdir -p /root/workbench_dir/nginx-static/eladmin_tmp_static
-#      - rm -rf /root/workbench_dir/nginx-static/eladmin_tmp_static/*
-#       - cp -r /drone/src/dist/* /root/workbench_dir/nginx-static/eladmin_tmp_static
-      - mkdir -p /opt/1panel/www/ngxin-static/eladmin_tmp_static
-      - rm -rf /opt/1panel/www/ngxin-static/eladmin_tmp_static/*
-      - cp -r /drone/src/dist/* /opt/1panel/www/ngxin-static/eladmin_tmp_static
+      - mkdir -p /opt/1panel/www/ngxin-static/portal_ui_static
+      - rm -rf /opt/1panel/www/ngxin-static/portal_ui/*
+      - cp -r /drone/src/dist/* /opt/1panel/www/ngxin-static/portal_ui
   - name: rebuild-cache
     image: drillster/drone-volume-cache
     volumes:
@@ -80,4 +77,4 @@ volumes:
       path: /opt/1panel/www
   - name: cache_node_module_dir
     host: 
-      path: /tmp/node-module-cache-eladmin-tmp-web
+      path: /tmp/node-module-cache-portal_ui
