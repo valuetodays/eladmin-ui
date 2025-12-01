@@ -46,7 +46,7 @@ steps:
       # - npm i
       - npm i --registry=https://registry.npmmirror.com
       - npm run build:prod
-      - mkdir -p /opt/1panel/www/ngxin-static/portal_ui_static
+      - mkdir -p /opt/1panel/www/ngxin-static/portal_ui
       - rm -rf /opt/1panel/www/ngxin-static/portal_ui/*
       - cp -r /drone/src/dist/* /opt/1panel/www/ngxin-static/portal_ui
   - name: rebuild-cache
