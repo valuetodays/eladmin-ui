@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from '@/router/routers'
 import { Notification } from 'element-ui'
 import store from '../store'
-import { getToken } from '@/utils/auth'
+import { getToken, setToken, removeToken } from '@/utils/auth'
 import Config from '@/settings'
 import Cookies from 'js-cookie'
 
@@ -38,8 +38,7 @@ service.interceptors.response.use(
   response => {
     if (response.headers.authorization) {
       // 当请求头携带有登录信息，将其设置到 localStorage 中。
-      localStorage.removeItem('portal_token')
-      localStorage.setItem('portal_token', response.headers.authorization)
+      setToken(response.headers.authorization)
     }
 
     // 判断是否是文件流
@@ -64,6 +63,9 @@ service.interceptors.response.use(
         title: "go home?",
         duration: 5000
       })
+    } else if (dataObj.code === 1001) {
+        removeToken()
+        router.push({ name: '/login' })
     } else {
       Notification.error({
         title: dataObj.msg,
