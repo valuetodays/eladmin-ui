@@ -4,13 +4,14 @@ import Config from '@/settings'
 const TokenKey = Config.TokenKey
 
 export function getToken() {
-  return Cookies.get(TokenKey)
+  //return Cookies.get(TokenKey)
+  return localStorage.getItem('portal_token');
 }
 
 export function setToken(token, rememberMe) {
-  if (rememberMe) {
-    return Cookies.set(TokenKey, token, { expires: Config.tokenCookieExpires })
-  } else return Cookies.set(TokenKey, token)
+  // if (rememberMe) {
+    // return Cookies.set(TokenKey, token, { expires: Config.tokenCookieExpires })
+  // } else return Cookies.set(TokenKey, token)
 }
 
 export function removeToken() {

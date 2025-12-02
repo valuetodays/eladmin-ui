@@ -36,6 +36,12 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   response => {
+    if (response.headers.authorization) {
+      // 当请求头携带有登录信息，将其设置到 localStorage 中。
+      localStorage.removeItem('portal_token')
+      localStorage.setItem('portal_token', response.headers.authorization)
+    }
+
     // 判断是否是文件流
     const contentType = response.headers['content-type'];
     if (
