@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '../layout/index'
 
-import ParticleDemo from '@/views/demo/ParticleDemo.vue'
+import ParticleDemo from '@/views/demos/ParticleDemo.vue'
 
 Vue.use(Router)
 
