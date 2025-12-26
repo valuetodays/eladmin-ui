@@ -18,14 +18,15 @@ const SHAPES = [
 function random(min, max) {
   return Math.random() * (max - min) + min;
 }
-function colorByType(type) {
-  if (type === "success") return "#52c41a";
-  if (type === "error") return "#ff4d4f";
+function parserColor(_color) {
+  if (_color === "success") return "#52c41a";
+  if (_color === "error") return "#ff4d4f";
+  if (_color.indexOf("#") === 0) return _color;
   return `hsl(${Math.random() * 360},80%,60%)`;
 }
 
 class Particle {
-  constructor(x, y, type) {
+  constructor(x, y, _color) {
     const angle = Math.random() * Math.PI * 2;
     const speed = random(2.5, 6.5);
     this.x = x;
@@ -37,7 +38,7 @@ class Particle {
     this.alpha = 1;
     this.rotation = random(0, Math.PI * 2);
     this.rotateSpeed = random(-0.15, 0.15);
-    this.color = colorByType(type);
+    this.color = parserColor(_color);
     this.shape = SHAPES[Math.floor(Math.random() * SHAPES.length)];
   }
   update() {
@@ -174,8 +175,8 @@ function animate() {
 }
 export function explode(x, y, options = {}) {
   init();
-  const { count = 36, type } = options;
+  const { count = 36, color } = options;
   for (let i = 0; i < count; i++) {
-    particles.push(new Particle(x, y, type));
+    particles.push(new Particle(x, y, color));
   }
 }

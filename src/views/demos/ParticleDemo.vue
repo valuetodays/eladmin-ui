@@ -45,6 +45,9 @@
         <button v-particle="{ count: 30, color: '#fa8c16' }">
           橙色
         </button>
+        <button v-particle="{ count: 30, color: 'success' }">
+          success
+        </button>
       </div>
     </section>
 
