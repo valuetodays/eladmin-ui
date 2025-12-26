@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '../layout/index'
 
+import ParticleDemo from '@/views/demo/ParticleDemo.vue'
+
 Vue.use(Router)
 
 export const constantRouterMap = [
@@ -20,6 +22,11 @@ export const constantRouterMap = [
     path: '/401',
     component: (resolve) => require(['@/views/features/401'], resolve),
     hidden: true
+  },
+  {
+      path: '/particle',
+      name: 'ParticleDemo',
+      component: ParticleDemo
   },
   {
     path: '/redirect',

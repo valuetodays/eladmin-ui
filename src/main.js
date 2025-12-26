@@ -20,7 +20,7 @@ import './assets/styles/index.scss'
 import App from './App'
 import store from './store'
 import router from './router/routers'
-
+import ParticleDirective from './directives/particle'
 import './assets/icons' // icon
 import './router/index' // permission control
 
@@ -30,6 +30,9 @@ Vue.use(dict)
 Vue.use(Element, {
   size: Cookies.get('size') || 'small' // set element-ui default size
 })
+
+
+Vue.directive('particle', ParticleDirective)
 
 Vue.config.productionTip = false
 
