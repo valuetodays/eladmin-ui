@@ -19,10 +19,13 @@ function random(min, max) {
   return Math.random() * (max - min) + min;
 }
 function parserColor(_color) {
+  if (!_color) {
+    return `hsl(${Math.random() * 360},80%,60%)`;
+  }
   if (_color === "success") return "#52c41a";
   if (_color === "error") return "#ff4d4f";
   if (_color.indexOf("#") === 0) return _color;
-  return `hsl(${Math.random() * 360},80%,60%)`;
+    return `hsl(${Math.random() * 360},80%,60%)`;
 }
 
 class Particle {
