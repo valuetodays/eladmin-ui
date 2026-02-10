@@ -142,7 +142,7 @@
 </template>
 
 <script>
-import crudStockInfo from '@/api/stockInfo'
+import crudStockInfo from '@/api/mybiz/stockInfo'
 import CRUD, { presenter, header, form, crud } from '@crud/crud'
 import rrOperation from '@crud/RR.operation'
 import crudOperation from '@crud/CRUD.operation'
