@@ -24,7 +24,26 @@
         <rrOperation :crud="crud" />
       </div>
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
-      <crudOperation :permission="permission" />
+      <crudOperation :permission="permission" >
+        <el-button
+          slot="right"
+          v-permission="['admin','stockInfo:saveLatest30Days']"
+          class="filter-item"
+          size="mini"
+          type="primary"
+          @click="saveLatest30Days()"
+        >同步popular记录的近30天行情数据
+        </el-button>
+        <el-button
+          slot="right"
+          v-permission="['admin','stockInfo:computeLatest30DaysCci']"
+          class="filter-item"
+          size="mini"
+          type="primary"
+          @click="computeLatest30DaysCci()"
+        >计算popular记录的近30天的Cci
+        </el-button>
+      </crudOperation>
       <!--表单组件-->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
         <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
