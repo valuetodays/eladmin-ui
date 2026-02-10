@@ -26,7 +26,7 @@ export function edit(data) {
 
 export function saveAllDailyStat(id) {
   return request({
-    url: 'api/indexInfo/saveAllDailyStat',
+    url: 'api/stockInfo/saveAllDailyStat',
     method: 'post',
     data: { id: id }
   })
@@ -34,7 +34,7 @@ export function saveAllDailyStat(id) {
 
 export function saveLatest30Days() {
   return request({
-    url: 'api/indexInfo/saveLatest30Days',
+    url: 'api/stockInfo/saveLatest30Days',
     method: 'post',
     data: {}
   })
