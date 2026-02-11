@@ -38,11 +38,11 @@
       :title="crud.status.title" 
       width="580px"
     >
-      <el-form ref="form" :model="form" :rules="rules" size="small" label-width="100px">
+      <el-form ref="form" :model="crud.form" :rules="rules" size="small" label-width="100px">
         <el-form-item v-for="f in formFields" :key="f.prop" :label="f.label" :prop="f.prop">
           <el-switch
             v-if="f.type === 'switch'"
-            v-model="form[f.prop]"
+            v-model="crud.form[f.prop]"
             active-color="#13ce66"
             inactive-color="#ff4949"
             v-bind="f.props"
@@ -50,7 +50,7 @@
           <component
             v-else
             :is="f.type || 'el-input'"
-            v-model="form[f.prop]"
+            v-model="crud.form[f.prop]"
             v-bind="f.props"
           />
         </el-form-item>
