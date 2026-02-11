@@ -107,23 +107,27 @@
       <!--表格渲染-->
       <el-table ref="table" v-loading="crud.loading" :data="crud.data" size="small" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="id" label="ID" />
-        <el-table-column prop="name" label="名称" />
-        <el-table-column prop="portBindings" >
-          <template #header>
+
+        <el-table-column v-for="c in tableColumns" :key="c.prop" :prop="c.prop" :label="c.label">
+          <!-- header -->
+          <template v-if="c.headerTooltip" slot="header">
             <span>
-              绑定的端口
-              <el-tooltip content="外网 → 内网" placement="top">
-                <i class="el-icon-question" style="margin-left: 4px; cursor: pointer;"></i>
+              {{ c.label }}
+              <el-tooltip :content="c.headerTooltip">
+                <i class="el-icon-question"></i>
               </el-tooltip>
             </span>
           </template>
-        </el-table-column>
-        <el-table-column prop="timeZoneEnabled" label="timezone状态">
+
           <template slot-scope="scope">
-            <el-tooltip :content="'current value: ' + dict.label.switch_status_1_0[scope.row.timeZoneEnabled]" placement="top">
+            <!-- switch 类型 -->
+            <el-tooltip
+              v-if="c.type === 'switch'"
+              :content="'current value: ' + dict.label.switch_status_1_0[scope.row[c.prop]]"
+              placement="top"
+            >
               <el-switch
-                v-model="scope.row.timeZoneEnabled"
+                v-model="scope.row[c.prop]"
                 :disabled="true"
                 active-color="#409EFF"
                 inactive-color="#F56C6C"
@@ -131,44 +135,15 @@
                 :active-value="true"
               />
             </el-tooltip>
-            <!-- {{ dict.label.switch_status_1_0[scope.row.timeZoneEnabled] }} -->
+
+            <!-- 普通字段 -->
+            <span v-else>
+              {{ scope.row[c.prop] }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column prop="domain" label="域名" />
-        <el-table-column prop="httpsEnabled" label="https状态">
-          <template slot-scope="scope">
-            <el-tooltip :content="'current value: ' + dict.label.switch_status_1_0[scope.row.httpsEnabled]" placement="top">
-              <el-switch
-                v-model="scope.row.httpsEnabled"
-                :disabled="true"
-                active-color="#409EFF"
-                inactive-color="#F56C6C"
-                :inactive-value="false"
-                :active-value="true"
-              />
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column prop="imageName" label="镜像名称" />
-        <el-table-column prop="enabled" label="状态">
-          <template slot-scope="scope">
-            <el-tooltip :content="'current value: ' + dict.label.switch_status_1_0[scope.row.enabled]" placement="top">
-              <el-switch
-                v-model="scope.row.enabled"
-                :disabled="true"
-                active-color="#409EFF"
-                inactive-color="#F56C6C"
-                :inactive-value="false"
-                :active-value="true"
-              />
-            </el-tooltip>
-            <!-- {{ dict.label.switch_status_1_0[scope.row.enabled] }} -->
-          </template>
-        </el-table-column>
-        <el-table-column prop="createBy" label="创建者" />
-        <el-table-column prop="updateBy" label="更新者" />
-        <el-table-column prop="createTime" label="创建日期" />
-        <el-table-column prop="updateTime" label="更新时间" />
+
+        <!-- 操作 -->
         <el-table-column v-if="checkPer(['admin','vtServer:edit','vtServer:del'])" label="操作" width="150px" align="center">
           <template slot-scope="scope">
             <udOperation
@@ -251,6 +226,20 @@ export default {
         { label: 'https状态', prop: 'httpsEnabled', type: 'select', options: [], props: { clearable: true, size: 'small', style: 'width:90px' } },
         { label: '镜像名称', prop: 'imageName', props: { clearable: true, size: 'small', style: 'width:90px' } },
         { label: '状态', prop: 'enabled', type: 'select', options: [], props: { clearable: true, size: 'small', style: 'width:90px' } }
+      ],
+      tableColumns: [
+        { prop: 'id', label: 'ID' },
+        { prop: 'name', label: '名称' },
+        { prop: 'portBindings', label: '绑定的端口',    headerTooltip: '外网 → 内网' },
+        { prop: 'timeZoneEnabled', label: 'timezone状态', type: 'switch' },
+        { prop: 'domain', label: '域名' },
+        { prop: 'httpsEnabled', label: 'https状态', type: 'switch' },
+        { prop: 'imageName', label: '镜像名称' },
+        { prop: 'enabled', label: '状态', type: 'switch' },
+        { prop: 'createBy', label: '创建者' },
+        { prop: 'updateBy', label: '更新者' },
+        { prop: 'createTime', label: '创建日期' },
+        { prop: 'updateTime', label: '更新时间' },
       ],
     }
   },
