@@ -2,40 +2,12 @@
   <div class="app-container">
     <!--工具栏-->
     <div class="head-container">
-      <div v-if="crud.props.searchToggle" style="display: flex; flex-wrap: wrap; gap: 8px;">
-        <!-- 搜索 -->
-        <div style="display: inline-flex; align-items: center;" v-for="f in searchFields" >
-          <el-tooltip v-if="f.tooltip" :content="f.tooltip" placement="top">
-            <label class="el-form-item-label" style="cursor: help;">{{ f.label }}
-              <i class="el-icon-question" style="margin-left: 4px; cursor: pointer;"></i>
-            </label>
-          </el-tooltip>
-          <template v-else>
-            <label class="el-form-item-label">{{ f.label }}</label>
-          </template>
+    <base-crud-page :crud="crud" :searchFields="searchFields">
+      <template #crud-operation>
+        <crudOperation :permission="permission" />
+      </template>
+    </base-crud-page>
 
-          <component
-            :is="f.type === 'select' ? 'el-select' : 'el-input'"
-            v-model="query[f.prop]"
-            v-bind="f.props"
-            class="filter-item"
-            @keyup.enter.native="f.type !== 'select' && crud.toQuery"
-            @change="f.type === 'select' && crud.toQuery"
-          >
-            <el-option
-              v-if="f.options"
-              v-for="o in f.options"
-              :key="o.value"
-              :label="o.label"
-              :value="o.value"
-            />
-          </component>
-        </div>
-
-        <rrOperation :crud="crud" />
-      </div>
-      <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
-      <crudOperation :permission="permission" />
 
       <!-- 表单弹窗 -->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
@@ -130,6 +102,7 @@
 </template>
 
 <script>
+import BaseCrudPage from '@/components/BaseCrudPage.vue'
 import crudVtServer from '@/api/vtServer'
 import CRUD, { presenter, header, form, crud } from '@crud/crud'
 import rrOperation from '@crud/RR.operation'
@@ -140,7 +113,7 @@ import pagination from '@crud/Pagination'
 const defaultForm = { id: null, name: null, portBindings: null, timeZoneEnabled: 1, domain: null, httpsEnabled: null, imageName: null, enabled: null, createBy: null, updateBy: null, createTime: null, updateTime: null }
 export default {
   name: 'VtServer',
-  components: { pagination, crudOperation, rrOperation, udOperation },
+  components: { BaseCrudPage, pagination, crudOperation, rrOperation, udOperation },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   dicts: ['switch_status_1_0'],
   cruds() {
@@ -148,6 +121,7 @@ export default {
   },
   data() {
     return {
+      query: {},
       permission: {
         add: ['admin', 'vtServer:add'],
         edit: ['admin', 'vtServer:edit'],
