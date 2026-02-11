@@ -2,54 +2,36 @@
   <div class="app-container">
     <!--工具栏-->
     <div class="head-container">
-      <div v-if="crud.props.searchToggle">
+      <div v-if="crud.props.searchToggle" style="display: flex; flex-wrap: wrap; gap: 8px;">
         <!-- 搜索 -->
-        <label class="el-form-item-label">名称</label>
-        <el-input v-model="query.name" clearable placeholder="名称" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <el-tooltip content="外网 → 内网" placement="top">
-          <label class="el-form-item-label" style="cursor: help;">
-            绑定的端口
-            <i class="el-icon-question" style="margin-left: 4px; cursor: pointer;"></i>
-          </label>
-        </el-tooltip>        
-        <el-input v-model="query.portBindings" clearable placeholder="绑定的端口" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <label class="el-form-item-label">timezone状态</label>
-        <el-select v-model="query.timeZoneEnabled" clearable size="small"
-                placeholder="timezone状态"
-                class="filter-item"
-                style="width: 90px"
-                @change="crud.toQuery">
-          <el-option v-for="item in dict.switch_status_1_0"
-                  :key="item.id"
-                  :label="item.label"
-                  :value="item.value" />
-        </el-select>
-        <label class="el-form-item-label">域名</label>
-        <el-input v-model="query.domain" clearable placeholder="域名" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <label class="el-form-item-label">https状态</label>
-        <el-select v-model="query.httpsEnabled" clearable size="small"
-                placeholder="https状态"
-                class="filter-item"
-                style="width: 90px"
-                @change="crud.toQuery">
-          <el-option v-for="item in dict.switch_status_1_0"
-                  :key="item.id"
-                  :label="item.label"
-                  :value="item.value" />
-        </el-select>
-        <label class="el-form-item-label">镜像名称</label>
-        <el-input v-model="query.imageName" clearable placeholder="镜像名称" style="width: 185px;" class="filter-item" @keyup.enter.native="crud.toQuery" />
-        <label class="el-form-item-label">状态</label>
-        <el-select v-model="query.enabled" clearable size="small"
-                placeholder="状态"
-                class="filter-item"
-                style="width: 90px"
-                @change="crud.toQuery">
-          <el-option v-for="item in dict.switch_status_1_0"
-                  :key="item.id"
-                  :label="item.label"
-                  :value="item.value" />
-        </el-select>
+        <div style="display: inline-flex; align-items: center;" v-for="f in searchFields" >
+          <el-tooltip v-if="f.tooltip" :content="f.tooltip" placement="top">
+            <label class="el-form-item-label" style="cursor: help;">{{ f.label }}
+              <i class="el-icon-question" style="margin-left: 4px; cursor: pointer;"></i>
+            </label>
+          </el-tooltip>
+          <template v-else>
+            <label class="el-form-item-label">{{ f.label }}</label>
+          </template>
+
+          <component
+            :is="f.type === 'select' ? 'el-select' : 'el-input'"
+            v-model="query[f.prop]"
+            v-bind="f.props"
+            class="filter-item"
+            @keyup.enter.native="f.type !== 'select' && crud.toQuery"
+            @change="f.type === 'select' && crud.toQuery"
+          >
+            <el-option
+              v-if="f.options"
+              v-for="o in f.options"
+              :key="o.value"
+              :label="o.label"
+              :value="o.value"
+            />
+          </component>
+        </div>
+
         <rrOperation :crud="crud" />
       </div>
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
@@ -260,8 +242,23 @@ export default {
         { key: 'httpsEnabled', display_name: 'https状态' },
         { key: 'imageName', display_name: '镜像名称' },
         { key: 'enabled', display_name: '状态' }
-      ]
+      ],
+      searchFields: [
+        { label: '名称', prop: 'name', props: { clearable: true, size: 'small', style: 'width:90px' } },
+        { label: '绑定的端口', prop: 'portBindings', tooltip: '外网 → 内网', props: { clearable: true, size: 'small', style: 'width:90px' } },
+        { label: 'timezone状态', prop: 'timeZoneEnabled', type: 'select', options: [], props: { clearable: true, size: 'small', style: 'width:90px' } },
+        { label: '域名', prop: 'domain' , props: { clearable: true, size: 'small', style: 'width:90px' }},
+        { label: 'https状态', prop: 'httpsEnabled', type: 'select', options: [], props: { clearable: true, size: 'small', style: 'width:90px' } },
+        { label: '镜像名称', prop: 'imageName', props: { clearable: true, size: 'small', style: 'width:90px' } },
+        { label: '状态', prop: 'enabled', type: 'select', options: [], props: { clearable: true, size: 'small', style: 'width:90px' } }
+      ],
     }
+  },
+  created() {
+    // 组件初始化后，dict 已经加载
+    this.searchFields.find(f => f.prop === 'timeZoneEnabled').options = this.dict['switch_status_1_0']
+    this.searchFields.find(f => f.prop === 'httpsEnabled').options = this.dict['switch_status_1_0']
+    this.searchFields.find(f => f.prop === 'enabled').options = this.dict['switch_status_1_0']
   },
   methods: {
     // 钩子：在获取表格数据之前执行，false 则代表不获取数据
