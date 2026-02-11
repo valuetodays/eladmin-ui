@@ -1,104 +1,14 @@
 <template>
-  <div class="app-container">
-    <!--工具栏-->
-    <div class="head-container">
-    <base-crud-page :crud="crud" :searchFields="searchFields">
-      <template #crud-operation>
-        <crudOperation :permission="permission" />
-      </template>
-    </base-crud-page>
-
-
-      <!-- 表单弹窗 -->
-      <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
-        <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-          <el-form-item v-for="f in formFields" :key="f.prop" :label="f.label" :prop="f.prop">
-            <!-- switch -->
-            <el-tooltip
-              v-if="f.type === 'switch'"
-              :content="'Switch value: ' + form[f.prop]"
-              placement="top"
-            >
-              <el-switch
-                active-color="#13ce66"
-                active-text="启用"
-                :active-value="true"
-                inactive-color="#ff4949"
-                inactive-text="停用"
-                :inactive-value="false" 
-                v-model="form[f.prop]"
-                v-bind="f.props">
-              </el-switch>
-            </el-tooltip>
-
-            <!-- 其它组件 -->
-            <component
-              v-else
-              :is="f.type || 'el-input'"
-              v-model="form[f.prop]"
-              v-bind="f.props"
-            />
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button type="text" @click="crud.cancelCU">取消</el-button>
-          <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">确认</el-button>
-        </div>
-      </el-dialog>
-      
-      <!--表格渲染-->
-      <el-table ref="table" v-loading="crud.loading" :data="crud.data" size="small" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
-        <el-table-column type="selection" width="55" />
-
-        <el-table-column v-for="c in tableColumns" :key="c.prop" :prop="c.prop" :label="c.label">
-          <!-- header -->
-          <template v-if="c.headerTooltip" slot="header">
-            <span>
-              {{ c.label }}
-              <el-tooltip :content="c.headerTooltip">
-                <i class="el-icon-question"></i>
-              </el-tooltip>
-            </span>
-          </template>
-
-          <template slot-scope="scope">
-            <!-- switch 类型 -->
-            <el-tooltip
-              v-if="c.type === 'switch'"
-              :content="'current value: ' + dict.label.switch_status_1_0[scope.row[c.prop]]"
-              placement="top"
-            >
-              <el-switch
-                v-model="scope.row[c.prop]"
-                :disabled="true"
-                active-color="#409EFF"
-                inactive-color="#F56C6C"
-                :inactive-value="false"
-                :active-value="true"
-              />
-            </el-tooltip>
-
-            <!-- 普通字段 -->
-            <span v-else>
-              {{ scope.row[c.prop] }}
-            </span>
-          </template>
-        </el-table-column>
-
-        <!-- 操作 -->
-        <el-table-column v-if="checkPer(['admin','vtServer:edit','vtServer:del'])" label="操作" width="150px" align="center">
-          <template slot-scope="scope">
-            <udOperation
-              :data="scope.row"
-              :permission="permission"
-            />
-          </template>
-        </el-table-column>
-      </el-table>
-      <!--分页组件-->
-      <pagination />
-    </div>
-  </div>
+  <base-crud-page
+    :crud="crud"
+    :form="form"
+    :permission="permission"
+    :rules="rules"
+    :search-fields="searchFields"
+    :table-columns="tableColumns"
+    :form-fields="formFields"
+  >
+  </base-crud-page>
 </template>
 
 <script>
@@ -113,7 +23,7 @@ import pagination from '@crud/Pagination'
 const defaultForm = { id: null, name: null, portBindings: null, timeZoneEnabled: 1, domain: null, httpsEnabled: null, imageName: null, enabled: null, createBy: null, updateBy: null, createTime: null, updateTime: null }
 export default {
   name: 'VtServer',
-  components: { BaseCrudPage, pagination, crudOperation, rrOperation, udOperation },
+  components: { BaseCrudPage },
   mixins: [presenter(), header(), form(defaultForm), crud()],
   dicts: ['switch_status_1_0'],
   cruds() {
