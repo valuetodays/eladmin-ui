@@ -7,9 +7,9 @@ version: "3"
 ###########
 
 services:
-  eladmin-web:
+  portal-ui:
     image: node:16.20.2
-    container_name: eladmin-web
+    container_name: portal-ui
     ports:
       - "8013:8013"
     environment:
