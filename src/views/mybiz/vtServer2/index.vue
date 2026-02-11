@@ -104,7 +104,7 @@ export default {
         { prop: 'updateTime', label: '更新时间' },
       ],
       formFields: [
-        { label: '名称1', prop: 'name' },
+        { label: '名称', prop: 'name' },
         { label: '绑定的端口', prop: 'portBindings', type: 'el-input', props: { rows: 3, type: 'textarea', style: 'width:370px' } },
         { label: 'timezone状态', prop: 'timeZoneEnabled', type: 'switch' },
         { label: '域名', prop: 'domain' },
