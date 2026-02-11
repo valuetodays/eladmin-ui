@@ -36,67 +36,36 @@
       </div>
       <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
       <crudOperation :permission="permission" />
-      <!--表单组件-->
+
+      <!-- 表单弹窗 -->
       <el-dialog :close-on-click-modal="false" :before-close="crud.cancelCU" :visible.sync="crud.status.cu > 0" :title="crud.status.title" width="500px">
         <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-          <el-form-item label="名称" prop="name">
-            <el-input v-model="form.name" style="width: 370px;" />
-          </el-form-item>
-          <el-form-item prop="portBindings">
-            <template #label>
-              <span style="display: inline-flex; align-items: center;">
-                绑定的端口
-                <el-tooltip content="外网 → 内网" placement="top">
-                  <i class="el-icon-question" style="margin-left: 4px; cursor: pointer;"></i>
-                </el-tooltip>
-              </span>
-            </template>
-            <el-input v-model="form.portBindings" :rows="3" type="textarea" style="width: 370px;" />
-          </el-form-item>
-          <el-form-item label="timezone状态" prop="timeZoneEnabled">
-            <el-tooltip :content="'Switch value: ' + form.timeZoneEnabled" placement="top">
+          <el-form-item v-for="f in formFields" :key="f.prop" :label="f.label" :prop="f.prop">
+            <!-- switch -->
+            <el-tooltip
+              v-if="f.type === 'switch'"
+              :content="'Switch value: ' + form[f.prop]"
+              placement="top"
+            >
               <el-switch
                 active-color="#13ce66"
                 active-text="启用"
                 :active-value="true"
                 inactive-color="#ff4949"
                 inactive-text="停用"
-                :inactive-value="false"
-                v-model="form.timeZoneEnabled">
+                :inactive-value="false" 
+                v-model="form[f.prop]"
+                v-bind="f.props">
               </el-switch>
             </el-tooltip>
-          </el-form-item>
-          <el-form-item label="域名" prop="domain">
-            <el-input v-model="form.domain" style="width: 370px;" />
-          </el-form-item>
-          <el-form-item label="https状态" prop="httpsEnabled">
-            <el-tooltip :content="'Switch value: ' + form.httpsEnabled" placement="top">
-              <el-switch
-                active-color="#13ce66"
-                active-text="启用"
-                :active-value="true"
-                inactive-color="#ff4949"
-                inactive-text="停用"
-                :inactive-value="false"
-                v-model="form.httpsEnabled">
-              </el-switch>
-            </el-tooltip>
-          </el-form-item>
-          <el-form-item label="镜像名称" prop="imageName">
-            <el-input v-model="form.imageName" style="width: 370px;" />
-          </el-form-item>
-          <el-form-item label="状态" prop="enabled">
-            <el-tooltip :content="'Switch value: ' + form.enabled" placement="top">
-              <el-switch
-                active-color="#13ce66"
-                active-text="启用"
-                :active-value="true"
-                inactive-color="#ff4949"
-                inactive-text="停用"
-                :inactive-value="false"
-                v-model="form.enabled">
-              </el-switch>
-            </el-tooltip>
+
+            <!-- 其它组件 -->
+            <component
+              v-else
+              :is="f.type || 'el-input'"
+              v-model="form[f.prop]"
+              v-bind="f.props"
+            />
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -104,6 +73,7 @@
           <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">确认</el-button>
         </div>
       </el-dialog>
+      
       <!--表格渲染-->
       <el-table ref="table" v-loading="crud.loading" :data="crud.data" size="small" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
         <el-table-column type="selection" width="55" />
@@ -209,15 +179,6 @@ export default {
           { required: true, message: '状态不能为空', trigger: 'blur' }
         ]
       },
-      queryTypeOptions: [
-        { key: 'name', display_name: '名称' },
-        { key: 'portBindings', display_name: '绑定的端口，外网->内网' },
-        { key: 'timeZoneEnabled', display_name: 'timezone状态' },
-        { key: 'domain', display_name: '域名' },
-        { key: 'httpsEnabled', display_name: 'https状态' },
-        { key: 'imageName', display_name: '镜像名称' },
-        { key: 'enabled', display_name: '状态' }
-      ],
       searchFields: [
         { label: '名称', prop: 'name', props: { clearable: true, size: 'small', style: 'width:90px' } },
         { label: '绑定的端口', prop: 'portBindings', tooltip: '外网 → 内网', props: { clearable: true, size: 'small', style: 'width:90px' } },
@@ -240,6 +201,15 @@ export default {
         { prop: 'updateBy', label: '更新者' },
         { prop: 'createTime', label: '创建日期' },
         { prop: 'updateTime', label: '更新时间' },
+      ],
+      formFields: [
+        { label: '名称1', prop: 'name' },
+        { label: '绑定的端口', prop: 'portBindings', type: 'el-input', props: { rows: 3, type: 'textarea', style: 'width:370px' } },
+        { label: 'timezone状态', prop: 'timeZoneEnabled', type: 'switch' },
+        { label: '域名', prop: 'domain' },
+        { label: 'https状态', prop: 'httpsEnabled', type: 'switch' },
+        { label: '镜像名称', prop: 'imageName' },
+        { label: '状态', prop: 'enabled', type: 'switch' }
       ],
     }
   },
