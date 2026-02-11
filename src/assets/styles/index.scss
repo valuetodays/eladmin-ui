@@ -180,3 +180,25 @@ aside {
 .multiselect--active {
   z-index: 1000 !important;
 }
+
+/* ------ 自定义配置 开始 ------ */
+/* 一级菜单（有子菜单的标题） */
+.el-submenu__title {
+  height: 46px;
+  line-height: 46px;
+}
+
+/* 普通菜单项 */
+.el-menu-item {
+  height: 36px;
+  line-height: 36px;
+  padding: 0 20px;
+}
+
+/* 子菜单里的菜单项（Element UI 会单独控制） */
+.el-submenu .el-menu-item {
+  height: 36px;
+  line-height: 36px;
+}
+/* ------ 自定义配置 结束 ------ */
+
