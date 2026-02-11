@@ -16,7 +16,8 @@ import './assets/styles/element-variables.scss'
 
 // global css
 import './assets/styles/index.scss'
-
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import App from './App'
 import store from './store'
 import router from './router/routers'
