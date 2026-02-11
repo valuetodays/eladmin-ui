@@ -123,9 +123,24 @@ export default {
     permission: { type: Object, default: () => ({}) }
   },
   mounted() {
-    // 关键代码：将当前组件内的 el-form 实例赋值给 crud 的 findVM 逻辑
-    // 这样 crud.submitCU 调用 validate 时就能找到这个 form 了
-    this.crud.findVM('form', this.$refs.form)
+    /**
+     * 核心补丁：
+     * crud.findVM('form') 找到的是 VtServer.vue。
+     * 我们需要把 BaseCrudPage 这里的 el-form 引用，
+     * 强行挂载到 VtServer 的 $refs 上。
+     */
+    const parentVm = this.crud.findVM('form')
+    if (parentVm) {
+      // 将当前组件(BaseCrudPage)的 ref["form"] 赋值给父组件的 $refs["form"]
+      parentVm.$refs['form'] = this.$refs['form']
+    }
+  },
+  // 建议加上销毁前的清理，防止内存溢出或引用混乱
+  beforeDestroy() {
+    const parentVm = this.crud.findVM('form')
+    if (parentVm && parentVm.$refs['form'] === this.$refs['form']) {
+      delete parentVm.$refs['form']
+    }
   }
 }
 </script>
