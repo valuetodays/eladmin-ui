@@ -95,6 +95,7 @@
       <el-table-column v-if="permission.edit || permission.del" label="操作" width="150px" align="center" fixed="right">
         <template slot-scope="scope">
           <udOperation :data="scope.row" :permission="permission" />
+          <slot name="table-operation" :row="scope.row" />
         </template>
       </el-table-column>
     </el-table>

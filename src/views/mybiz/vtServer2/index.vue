@@ -8,6 +8,24 @@
     :table-columns="tableColumns"
     :form-fields="formFields"
   >
+    <template #table-operation="{ row }">
+      <el-dropdown size="mini" type="primary">
+        <el-button type="primary" size="mini">
+          更多<i class="el-icon-arrow-down el-icon--right"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.native="saveAllDailyStat(row.id)">
+            测试菜单一
+          </el-dropdown-item>
+          <el-dropdown-item @click.native="updateMissingFields(row.id)">
+            测试菜单二
+          </el-dropdown-item>
+          <el-dropdown-item @click.native="computeAllCciById(row.id)">
+            测试菜单三
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </template>
   </base-crud-page>
 </template>
 
