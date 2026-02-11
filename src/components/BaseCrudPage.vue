@@ -112,9 +112,6 @@ import pagination from '@crud/Pagination'
 import { presenter, header, form, crud } from '@crud/crud'
 export default {
   name: 'BaseCrudPage',
-  // 关键：在这里直接使用混入
-  // 注意：因为 form() 是一个返回 mixin 对象的函数，我们需要动态处理
-  mixins: [form(), header(), crud()],
   components: { rrOperation, crudOperation, udOperation, pagination },
   props: {
     crud: { type: Object, required: true },
@@ -126,21 +123,31 @@ export default {
     rules: { type: Object, default: () => ({}) },
     permission: { type: Object, default: () => ({}) }
   },
-  // 模拟 CRUD.js 中 form() 混入的行为
-  beforeCreate() {
-    // 1. 寻找 crud 实例（如果 props 没传，就向上找）
-    this.crud = this.crud || lookupCrud(this)
-    // 2. 注册当前组件为 'form' 类型的 VM，占据第 4 个槽位 (index 为 3)
-    this.crud.registerVM('form', this, 3)
-  },
+  // 【核心修复】：改用 created 并在内部手动注册
   created() {
-    // 覆盖混入中的 defaultForm
-    this.crud.defaultForm = this.defaultForm
-    this.crud.resetForm()
+    const crud = this.crud
+    
+    // 1. 同步默认表单数据
+    crud.defaultForm = this.defaultForm
+    
+    // 2. 手动注册所有 VM 角色
+    // 因为 el-form, 表格, 搜索都在这个组件里，所以我们要承担所有身份
+    crud.registerVM('presenter', this, 0) // 主页
+    crud.registerVM('header', this, 1)    // 头部/搜索
+    crud.registerVM('pagination', this, 2)// 分页
+    crud.registerVM('form', this, 3)      // 表单 (关键点！)
+
+    // 3. 执行重置，让 crud.form 响应式
+    crud.resetForm()
   },
+
   beforeDestroy() {
-    // 销毁时记得注销，避免影响其他页面
-    //this.crud.unregisterVM('form', this)
+    // 销毁时清理注册信息，防止内存泄漏或影响其他页面
+    const crud = this.crud
+    crud.unregisterVM('presenter', this)
+    crud.unregisterVM('header', this)
+    crud.unregisterVM('pagination', this)
+    crud.unregisterVM('form', this)
   }
 }
 </script>
