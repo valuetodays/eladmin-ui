@@ -121,6 +121,11 @@ export default {
     formFields: { type: Array, default: () => [] },
     rules: { type: Object, default: () => ({}) },
     permission: { type: Object, default: () => ({}) }
+  },
+  mounted() {
+    // 关键代码：将当前组件内的 el-form 实例赋值给 crud 的 findVM 逻辑
+    // 这样 crud.submitCU 调用 validate 时就能找到这个 form 了
+    this.crud.findVM('form', this.$refs.form)
   }
 }
 </script>
