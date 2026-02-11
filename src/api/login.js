@@ -8,28 +8,28 @@ export function login(username, password, code, uuid) {
       username,
       password,
       code,
-      uuid
-    }
+      uuid,
+    },
   })
 }
 
 export function getInfo() {
   return request({
     url: 'api/auth/info',
-    method: 'get'
+    method: 'get',
   })
 }
 
 export function getCodeImg() {
   return request({
     url: 'api/auth/public/code',
-    method: 'get'
+    method: 'get',
   })
 }
 
 export function logout() {
   return request({
     url: 'api/auth/logout',
-    method: 'delete'
+    method: 'delete',
   })
 }

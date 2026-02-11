@@ -4,6 +4,6 @@ export function del(keys) {
   return request({
     url: 'api/online/delete',
     method: 'delete',
-    data: keys
+    data: keys,
   })
 }

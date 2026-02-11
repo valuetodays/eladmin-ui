@@ -17,7 +17,13 @@
       </crudOperation>
     </div>
     <!--表格渲染-->
-    <el-table ref="table" v-loading="crud.loading" :data="crud.data" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
+    <el-table
+      ref="table"
+      v-loading="crud.loading"
+      :data="crud.data"
+      style="width: 100%"
+      @selection-change="crud.selectionChangeHandler"
+    >
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -51,85 +57,89 @@
 </template>
 
 <script>
-import { getErrDetail, delAllError } from '@/api/monitor/log'
-import Search from './search'
-import CRUD, { presenter } from '@crud/crud'
-import crudOperation from '@crud/CRUD.operation'
-import pagination from '@crud/Pagination'
+  import { getErrDetail, delAllError } from '@/api/monitor/log'
+  import Search from './search'
+  import CRUD, { presenter } from '@crud/crud'
+  import crudOperation from '@crud/CRUD.operation'
+  import pagination from '@crud/Pagination'
 
-export default {
-  name: 'ErrorLog',
-  components: { Search, crudOperation, pagination },
-  cruds() {
-    return CRUD({ title: '异常日志', url: 'api/logs/error' })
-  },
-  mixins: [presenter()],
-  data() {
-    return {
-      errorInfo: '', dialog: false
-    }
-  },
-  created() {
-    this.crud.optShow = {
-      add: false,
-      edit: false,
-      del: false,
-      download: true
-    }
-  },
-  methods: {
-    // 获取异常详情
-    info(id) {
-      this.dialog = true
-      getErrDetail(id).then(res => {
-        this.errorInfo = res.exception
-      })
+  export default {
+    name: 'ErrorLog',
+    components: { Search, crudOperation, pagination },
+    cruds() {
+      return CRUD({ title: '异常日志', url: 'api/logs/error' })
     },
-    confirmDelAll() {
-      this.$confirm(`确认清空所有异常日志吗?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.crud.delAllLoading = true
-        delAllError().then(res => {
-          this.crud.delAllLoading = false
-          this.crud.dleChangePage(1)
-          this.crud.delSuccessNotify()
-          this.crud.toQuery()
-        }).catch(err => {
-          this.crud.delAllLoading = false
-          console.log(err.response.data.message)
+    mixins: [presenter()],
+    data() {
+      return {
+        errorInfo: '',
+        dialog: false,
+      }
+    },
+    created() {
+      this.crud.optShow = {
+        add: false,
+        edit: false,
+        del: false,
+        download: true,
+      }
+    },
+    methods: {
+      // 获取异常详情
+      info(id) {
+        this.dialog = true
+        getErrDetail(id).then((res) => {
+          this.errorInfo = res.exception
         })
-      }).catch(() => {
-      })
-    }
+      },
+      confirmDelAll() {
+        this.$confirm(`确认清空所有异常日志吗?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+        })
+          .then(() => {
+            this.crud.delAllLoading = true
+            delAllError()
+              .then((res) => {
+                this.crud.delAllLoading = false
+                this.crud.dleChangePage(1)
+                this.crud.delSuccessNotify()
+                this.crud.toQuery()
+              })
+              .catch((err) => {
+                this.crud.delAllLoading = false
+                console.log(err.response.data.message)
+              })
+          })
+          .catch(() => {})
+      },
+    },
   }
-}
 </script>
 
 <style scoped>
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 70px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  width: 100%;
-}
-.demo-table-expand .el-form-item__content {
-  font-size: 12px;
-}
-/deep/ .el-dialog__body {
-  padding: 0 20px 10px 20px !important;
-}
-.java.hljs {
-  color: #444;
-  background: #ffffff !important;
-  height: 630px !important;
-}
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 70px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+  }
+  .demo-table-expand .el-form-item__content {
+    font-size: 12px;
+  }
+  /deep/ .el-dialog__body {
+    padding: 0 20px 10px 20px !important;
+  }
+  .java.hljs {
+    color: #444;
+    background: #ffffff !important;
+    height: 630px !important;
+  }
 </style>

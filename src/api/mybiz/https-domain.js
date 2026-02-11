@@ -4,7 +4,7 @@ export function add(data) {
   return request({
     url: 'api/httpsDomain/add',
     method: 'post',
-    data
+    data,
   })
 }
 
@@ -12,7 +12,7 @@ export function del(ids) {
   return request({
     url: 'api/httpsDomain/delete',
     method: 'post',
-    data: ids
+    data: ids,
   })
 }
 
@@ -20,7 +20,7 @@ export function edit(data) {
   return request({
     url: 'api/httpsDomain/edit',
     method: 'post',
-    data
+    data,
   })
 }
 

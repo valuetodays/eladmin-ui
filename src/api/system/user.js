@@ -5,7 +5,7 @@ export function add(data) {
   return request({
     url: 'api/users/add',
     method: 'post',
-    data
+    data,
   })
 }
 
@@ -13,7 +13,7 @@ export function del(ids) {
   return request({
     url: 'api/users/delete',
     method: 'delete',
-    data: ids
+    data: ids,
   })
 }
 
@@ -21,7 +21,7 @@ export function edit(data) {
   return request({
     url: 'api/users/edit',
     method: 'put',
-    data
+    data,
   })
 }
 
@@ -29,19 +29,19 @@ export function editUser(data) {
   return request({
     url: 'api/users/center',
     method: 'put',
-    data
+    data,
   })
 }
 
 export function updatePass(user) {
   const data = {
     oldPass: encrypt(user.oldPass),
-    newPass: encrypt(user.newPass)
+    newPass: encrypt(user.newPass),
   }
   return request({
     url: 'api/users/updatePass/',
     method: 'post',
-    data
+    data,
   })
 }
 
@@ -49,21 +49,20 @@ export function resetPwd(ids) {
   return request({
     url: 'api/users/resetPwd',
     method: 'put',
-    data: ids
+    data: ids,
   })
 }
 
 export function updateEmail(form) {
   const data = {
     password: encrypt(form.pass),
-    email: form.email
+    email: form.email,
   }
   return request({
     url: 'api/users/updateEmail/' + form.code,
     method: 'post',
-    data
+    data,
   })
 }
 
 export default { add, edit, del, resetPwd }
-

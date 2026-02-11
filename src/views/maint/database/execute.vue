@@ -25,62 +25,60 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { getToken } from '@/utils/auth'
-export default {
-  props: {
-    databaseInfo: {
-      type: Object,
-      default() {
-        return {}
-      }
-    }
-  },
-  data() {
-    return {
-      loading: false,
-      dialog: false,
-      headers: {
-        Authorization: getToken()
+  import { mapGetters } from 'vuex'
+  import { getToken } from '@/utils/auth'
+  export default {
+    props: {
+      databaseInfo: {
+        type: Object,
+        default() {
+          return {}
+        },
       },
-      rules: {}
-    }
-  },
-  computed: {
-    ...mapGetters(['databaseUploadApi'])
-  },
-  mounted() {
-  },
-  methods: {
-    cancel() {
-      this.dialog = false
     },
-    handleSuccess(response, file, fileList) {
-      if (response === 'success') {
-        this.$notify({
-          title: '执行成功',
-          type: 'success',
-          duration: 2500
-        })
-      } else {
-        this.$notify({
-          title: response,
-          type: 'error',
-          duration: 0
-        })
+    data() {
+      return {
+        loading: false,
+        dialog: false,
+        headers: {
+          Authorization: getToken(),
+        },
+        rules: {},
       }
     },
-    handleError(e, file, fileList) {
-      const msg = JSON.parse(e.message)
-      this.$notify({
-        title: msg.message,
-        type: 'error',
-        duration: 0
-      })
-    }
+    computed: {
+      ...mapGetters(['databaseUploadApi']),
+    },
+    mounted() {},
+    methods: {
+      cancel() {
+        this.dialog = false
+      },
+      handleSuccess(response, file, fileList) {
+        if (response === 'success') {
+          this.$notify({
+            title: '执行成功',
+            type: 'success',
+            duration: 2500,
+          })
+        } else {
+          this.$notify({
+            title: response,
+            type: 'error',
+            duration: 0,
+          })
+        }
+      },
+      handleError(e, file, fileList) {
+        const msg = JSON.parse(e.message)
+        this.$notify({
+          title: msg.message,
+          type: 'error',
+          duration: 0,
+        })
+      },
+    },
   }
-}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

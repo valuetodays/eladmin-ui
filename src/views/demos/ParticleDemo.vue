@@ -36,18 +36,10 @@
     <section>
       <h2>自定义颜色</h2>
       <div class="row">
-        <button v-particle="{ count: 30, color: '#1890ff' }">
-          蓝色
-        </button>
-        <button v-particle="{ count: 30, color: '#722ed1' }">
-          紫色
-        </button>
-        <button v-particle="{ count: 30, color: '#fa8c16' }">
-          橙色
-        </button>
-        <button v-particle="{ count: 30, color: 'success' }">
-          success
-        </button>
+        <button v-particle="{ count: 30, color: '#1890ff' }">蓝色</button>
+        <button v-particle="{ count: 30, color: '#722ed1' }">紫色</button>
+        <button v-particle="{ count: 30, color: '#fa8c16' }">橙色</button>
+        <button v-particle="{ count: 30, color: 'success' }">success</button>
       </div>
     </section>
 
@@ -55,78 +47,67 @@
     <section>
       <h2>推荐用法（登录按钮）</h2>
       <div class="row">
-        <button
-          class="primary"
-          v-particle.hover.success="{ count: 32 }"
-          @click="login"
-        >
-          登录（hover + success）
-        </button>
+        <button class="primary" v-particle.hover.success="{ count: 32 }" @click="login">登录（hover + success）</button>
 
-        <button
-          class="danger"
-          v-particle.error="{ count: 24 }"
-        >
-          提交失败
-        </button>
+        <button class="danger" v-particle.error="{ count: 24 }">提交失败</button>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-export default {
-  methods: {
-    login() {
-      console.log('login click');
-    }
+  export default {
+    methods: {
+      login() {
+        console.log('login click')
+      },
+    },
   }
-};
 </script>
 
 <style scoped>
-.page {
-  padding: 40px;
-  font-family: Arial, sans-serif;
-}
+  .page {
+    padding: 40px;
+    font-family: Arial, sans-serif;
+  }
 
-section {
-  margin-bottom: 32px;
-}
+  section {
+    margin-bottom: 32px;
+  }
 
-h1 {
-  margin-bottom: 24px;
-}
+  h1 {
+    margin-bottom: 24px;
+  }
 
-h2 {
-  margin-bottom: 12px;
-  font-size: 18px;
-}
+  h2 {
+    margin-bottom: 12px;
+    font-size: 18px;
+  }
 
-.row {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
+  .row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
 
-button {
-  padding: 12px 20px;
-  font-size: 14px;
-  cursor: pointer;
-  border: 1px solid #d9d9d9;
-  background: #fff;
-  border-radius: 6px;
-}
+  button {
+    padding: 12px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid #d9d9d9;
+    background: #fff;
+    border-radius: 6px;
+  }
 
-button.primary {
-  background: #1677ff;
-  color: #fff;
-  border-color: #1677ff;
-}
+  button.primary {
+    background: #1677ff;
+    color: #fff;
+    border-color: #1677ff;
+  }
 
-button.danger {
-  background: #ff4d4f;
-  color: #fff;
-  border-color: #ff4d4f;
-}
+  button.danger {
+    background: #ff4d4f;
+    color: #fff;
+    border-color: #ff4d4f;
+  }
 </style>

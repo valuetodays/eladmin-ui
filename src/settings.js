@@ -42,5 +42,5 @@ module.exports = {
   /**
    * 备案号
    */
-  caseNumber: ''
+  caseNumber: '',
 }

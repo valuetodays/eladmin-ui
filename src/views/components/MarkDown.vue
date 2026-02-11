@@ -9,43 +9,40 @@
 </template>
 
 <script>
-import { upload } from '@/utils/upload'
-import { mapGetters } from 'vuex'
-import { mavonEditor } from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
+  import { upload } from '@/utils/upload'
+  import { mapGetters } from 'vuex'
+  import { mavonEditor } from 'mavon-editor'
+  import 'mavon-editor/dist/css/index.css'
 
-export default {
-  name: 'Markdown',
-  components: {
-    mavonEditor
-  },
-  data() {
-    return {
-      height: document.documentElement.clientHeight - 200 + 'px'
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'imagesUploadApi',
-      'baseApi'
-    ])
-  },
-  mounted() {
-    const that = this
-    window.onresize = function temp() {
-      that.height = document.documentElement.clientHeight - 200 + 'px'
-    }
-  },
-  methods: {
-    imgAdd(pos, $file) {
-      upload(this.imagesUploadApi, $file).then(res => {
-        const data = res.data
-        const url = this.baseApi + '/file/' + data.type + '/' + data.realName
-        this.$refs.md.$img2Url(pos, url)
-      })
-    }
+  export default {
+    name: 'Markdown',
+    components: {
+      mavonEditor,
+    },
+    data() {
+      return {
+        height: document.documentElement.clientHeight - 200 + 'px',
+      }
+    },
+    computed: {
+      ...mapGetters(['imagesUploadApi', 'baseApi']),
+    },
+    mounted() {
+      const that = this
+      window.onresize = function temp() {
+        that.height = document.documentElement.clientHeight - 200 + 'px'
+      }
+    },
+    methods: {
+      imgAdd(pos, $file) {
+        upload(this.imagesUploadApi, $file).then((res) => {
+          const data = res.data
+          const url = this.baseApi + '/file/' + data.type + '/' + data.realName
+          this.$refs.md.$img2Url(pos, url)
+        })
+      },
+    },
   }
-}
 </script>
 
 <style scoped>

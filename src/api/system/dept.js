@@ -4,7 +4,7 @@ export function getDepts(params) {
   return request({
     url: 'api/dept/query',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -14,7 +14,7 @@ export function getDeptSuperior(ids, exclude) {
   return request({
     url: 'api/dept/superior?exclude=' + exclude,
     method: 'post',
-    data
+    data,
   })
 }
 
@@ -22,7 +22,7 @@ export function add(data) {
   return request({
     url: 'api/dept/add',
     method: 'post',
-    data
+    data,
   })
 }
 
@@ -30,7 +30,7 @@ export function del(ids) {
   return request({
     url: 'api/dept/delete',
     method: 'delete',
-    data: ids
+    data: ids,
   })
 }
 
@@ -38,7 +38,7 @@ export function edit(data) {
   return request({
     url: 'api/dept/edit',
     method: 'put',
-    data
+    data,
   })
 }
 

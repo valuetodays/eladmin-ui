@@ -4,7 +4,7 @@ export function add(data) {
   return request({
     url: 'api/stockDailyIndicator/add',
     method: 'post',
-    data
+    data,
   })
 }
 
@@ -12,7 +12,7 @@ export function del(ids) {
   return request({
     url: 'api/stockDailyIndicator/delete',
     method: 'post',
-    data: ids
+    data: ids,
   })
 }
 
@@ -20,7 +20,7 @@ export function getAllCciLt_100ByStatDate(data) {
   return request({
     url: 'api/stockDailyIndicator/getAllCciLt_100ByStatDate',
     method: 'post',
-    data
+    data,
   })
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-editor-container">
-      <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <el-row style="background: #fff; padding: 16px 16px 0; margin-bottom: 32px">
         <heat-map />
       </el-row>
       <el-row :gutter="32">
@@ -57,7 +57,7 @@
           </div>
         </el-col>
       </el-row>
-      <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+      <el-row style="background: #fff; padding: 16px 16px 0; margin-bottom: 32px">
         <div class="chart-wrapper">
           <category />
         </div>
@@ -67,34 +67,34 @@
 </template>
 
 <script>
-import RadarChart from '@/components/Echarts/RadarChart'
-import HeatMap from '@/components/Echarts/HeatMap'
-import Gauge from '@/components/Echarts/Gauge'
-import Rich from '@/components/Echarts/Rich'
-import ThemeRiver from '@/components/Echarts/ThemeRiver'
-import Sunburst from '@/components/Echarts/Sunburst'
-import Graph from '@/components/Echarts/Graph'
-import Sankey from '@/components/Echarts/Sankey'
-import Scatter from '@/components/Echarts/Scatter'
-import Category from '@/components/Echarts/Category'
-import Point from '@/components/Echarts/Point'
+  import RadarChart from '@/components/Echarts/RadarChart'
+  import HeatMap from '@/components/Echarts/HeatMap'
+  import Gauge from '@/components/Echarts/Gauge'
+  import Rich from '@/components/Echarts/Rich'
+  import ThemeRiver from '@/components/Echarts/ThemeRiver'
+  import Sunburst from '@/components/Echarts/Sunburst'
+  import Graph from '@/components/Echarts/Graph'
+  import Sankey from '@/components/Echarts/Sankey'
+  import Scatter from '@/components/Echarts/Scatter'
+  import Category from '@/components/Echarts/Category'
+  import Point from '@/components/Echarts/Point'
 
-export default {
-  name: 'Echarts',
-  components: {
-    Point,
-    Category,
-    Graph,
-    HeatMap,
-    RadarChart,
-    Sunburst,
-    Gauge,
-    Rich,
-    ThemeRiver,
-    Sankey,
-    Scatter
+  export default {
+    name: 'Echarts',
+    components: {
+      Point,
+      Category,
+      Graph,
+      HeatMap,
+      RadarChart,
+      Sunburst,
+      Gauge,
+      Rich,
+      ThemeRiver,
+      Sankey,
+      Scatter,
+    },
   }
-}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

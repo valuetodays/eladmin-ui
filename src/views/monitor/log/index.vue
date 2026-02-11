@@ -17,7 +17,13 @@
       </crudOperation>
     </div>
     <!--表格渲染-->
-    <el-table ref="table" v-loading="crud.loading" :data="crud.data" style="width: 100%;" @selection-change="crud.selectionChangeHandler">
+    <el-table
+      ref="table"
+      v-loading="crud.loading"
+      :data="crud.data"
+      style="width: 100%"
+      @selection-change="crud.selectionChangeHandler"
+    >
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -50,65 +56,68 @@
 </template>
 
 <script>
-import Search from './search'
-import { delAllInfo } from '@/api/monitor/log'
-import CRUD, { presenter } from '@crud/crud'
-import crudOperation from '@crud/CRUD.operation'
-import pagination from '@crud/Pagination'
+  import Search from './search'
+  import { delAllInfo } from '@/api/monitor/log'
+  import CRUD, { presenter } from '@crud/crud'
+  import crudOperation from '@crud/CRUD.operation'
+  import pagination from '@crud/Pagination'
 
-export default {
-  name: 'Log',
-  components: { Search, crudOperation, pagination },
-  cruds() {
-    return CRUD({ title: '日志', url: 'api/logs/query' })
-  },
-  mixins: [presenter()],
-  created() {
-    this.crud.optShow = {
-      add: false,
-      edit: false,
-      del: false,
-      download: true
-    }
-  },
-  methods: {
-    confirmDelAll() {
-      this.$confirm(`确认清空所有操作日志吗?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.crud.delAllLoading = true
-        delAllInfo().then(res => {
-          this.crud.delAllLoading = false
-          this.crud.dleChangePage(1)
-          this.crud.delSuccessNotify()
-          this.crud.toQuery()
-        }).catch(err => {
-          this.crud.delAllLoading = false
-          console.log(err.response.data.message)
+  export default {
+    name: 'Log',
+    components: { Search, crudOperation, pagination },
+    cruds() {
+      return CRUD({ title: '日志', url: 'api/logs/query' })
+    },
+    mixins: [presenter()],
+    created() {
+      this.crud.optShow = {
+        add: false,
+        edit: false,
+        del: false,
+        download: true,
+      }
+    },
+    methods: {
+      confirmDelAll() {
+        this.$confirm(`确认清空所有操作日志吗?`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
         })
-      }).catch(() => {
-      })
-    }
+          .then(() => {
+            this.crud.delAllLoading = true
+            delAllInfo()
+              .then((res) => {
+                this.crud.delAllLoading = false
+                this.crud.dleChangePage(1)
+                this.crud.delSuccessNotify()
+                this.crud.toQuery()
+              })
+              .catch((err) => {
+                this.crud.delAllLoading = false
+                console.log(err.response.data.message)
+              })
+          })
+          .catch(() => {})
+      },
+    },
   }
-}
 </script>
 
 <style>
-.demo-table-expand {
-  font-size: 0;
-}
-.demo-table-expand label {
-  width: 70px;
-  color: #99a9bf;
-}
-.demo-table-expand .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  width: 100%;
-}
-.demo-table-expand .el-form-item__content {
-  font-size: 12px;
-}
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 70px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+  }
+  .demo-table-expand .el-form-item__content {
+    font-size: 12px;
+  }
 </style>

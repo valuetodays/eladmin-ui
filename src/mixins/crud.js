@@ -1,11 +1,5 @@
-import {
-  initData,
-  download
-} from '@/api/data'
-import {
-  parseTime,
-  downloadFile
-} from '@/utils'
+import { initData, download } from '@/api/data'
+import { parseTime, downloadFile } from '@/utils'
 
 export default {
   data() {
@@ -44,50 +38,54 @@ export default {
       // 重置表单
       resetForm: {},
       // 标题
-      title: ''
+      title: '',
     }
   },
   methods: {
     parseTime,
     downloadFile,
     async init() {
-      if (!await this.beforeInit()) {
+      if (!(await this.beforeInit())) {
         return
       }
       return new Promise((resolve, reject) => {
         this.loading = true
         // 请求数据
-        initData(this.url, this.getQueryParams()).then(data => {
-          this.total = data.totalElements
-          this.data = data.content
-          // time 毫秒后显示表格
-          setTimeout(() => {
+        initData(this.url, this.getQueryParams())
+          .then((data) => {
+            this.total = data.totalElements
+            this.data = data.content
+            // time 毫秒后显示表格
+            setTimeout(() => {
+              this.loading = false
+            }, this.time)
+            resolve(data)
+          })
+          .catch((err) => {
             this.loading = false
-          }, this.time)
-          resolve(data)
-        }).catch(err => {
-          this.loading = false
-          reject(err)
-        })
+            reject(err)
+          })
       })
     },
     beforeInit() {
       return true
     },
-    getQueryParams: function() {
+    getQueryParams: function () {
       // 清除参数无值的情况
-      Object.keys(this.query).length !== 0 && Object.keys(this.query).forEach(item => {
-        if (this.query[item] === null || this.query[item] === '') this.query[item] = undefined
-      })
-      Object.keys(this.params).length !== 0 && Object.keys(this.params).forEach(item => {
-        if (this.params[item] === null || this.params[item] === '') this.params[item] = undefined
-      })
+      Object.keys(this.query).length !== 0 &&
+        Object.keys(this.query).forEach((item) => {
+          if (this.query[item] === null || this.query[item] === '') this.query[item] = undefined
+        })
+      Object.keys(this.params).length !== 0 &&
+        Object.keys(this.params).forEach((item) => {
+          if (this.params[item] === null || this.params[item] === '') this.params[item] = undefined
+        })
       return {
         page: this.page,
         size: this.size,
         sort: this.sort,
         ...this.query,
-        ...this.params
+        ...this.params,
       }
     },
     // 改变页码
@@ -122,35 +120,35 @@ export default {
       this.$notify({
         title: '提交成功',
         type: 'success',
-        duration: 2500
+        duration: 2500,
       })
     },
     addSuccessNotify() {
       this.$notify({
         title: '新增成功',
         type: 'success',
-        duration: 2500
+        duration: 2500,
       })
     },
     editSuccessNotify() {
       this.$notify({
         title: '编辑成功',
         type: 'success',
-        duration: 2500
+        duration: 2500,
       })
     },
     delSuccessNotify() {
       this.$notify({
         title: '删除成功',
         type: 'success',
-        duration: 2500
+        duration: 2500,
       })
     },
     notify(title, type) {
       this.$notify({
         title: title,
         type: type,
-        duration: 2500
+        duration: 2500,
       })
     },
     /**
@@ -167,17 +165,20 @@ export default {
         return
       }
       this.delLoading = true
-      this.crudMethod.del(id).then(() => {
-        this.delLoading = false
-        this.$refs[id].doClose()
-        this.dleChangePage()
-        this.delSuccessNotify()
-        this.afterDelMethod()
-        this.init()
-      }).catch(() => {
-        this.delLoading = false
-        this.$refs[id].doClose()
-      })
+      this.crudMethod
+        .del(id)
+        .then(() => {
+          this.delLoading = false
+          this.$refs[id].doClose()
+          this.dleChangePage()
+          this.delSuccessNotify()
+          this.afterDelMethod()
+          this.init()
+        })
+        .catch(() => {
+          this.delLoading = false
+          this.$refs[id].doClose()
+        })
     },
     afterDelMethod() {},
     /**
@@ -187,7 +188,7 @@ export default {
       this.$confirm('你确定删除选中的数据吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
       }).then(() => {
         this.delAllMethod()
       })
@@ -202,18 +203,21 @@ export default {
       for (let i = 0; i < data.length; i++) {
         ids.push(data[i].id)
       }
-      this.crudMethod.delAll(ids).then(() => {
-        this.delAllLoading = false
-        this.dleChangePage(ids.length)
-        this.init()
-        this.$notify({
-          title: '删除成功',
-          type: 'success',
-          duration: 2500
+      this.crudMethod
+        .delAll(ids)
+        .then(() => {
+          this.delAllLoading = false
+          this.dleChangePage(ids.length)
+          this.init()
+          this.$notify({
+            title: '删除成功',
+            type: 'success',
+            duration: 2500,
+          })
         })
-      }).catch(() => {
-        this.delAllLoading = false
-      })
+        .catch(() => {
+          this.delAllLoading = false
+        })
     },
     /**
      * 显示新增弹窗前可以调用该方法
@@ -248,16 +252,19 @@ export default {
      * 新增方法
      */
     addMethod() {
-      this.crudMethod.add(this.form).then(() => {
-        this.addSuccessNotify()
-        this.loading = false
-        this.afterAddMethod()
-        this.cancel()
-        this.init()
-      }).catch(() => {
-        this.loading = false
-        this.afterAddErrorMethod()
-      })
+      this.crudMethod
+        .add(this.form)
+        .then(() => {
+          this.addSuccessNotify()
+          this.loading = false
+          this.afterAddMethod()
+          this.cancel()
+          this.init()
+        })
+        .catch(() => {
+          this.loading = false
+          this.afterAddErrorMethod()
+        })
     },
     /**
      * 新增后可以调用该方法
@@ -271,15 +278,18 @@ export default {
      * 通用的编辑方法
      */
     editMethod() {
-      this.crudMethod.edit(this.form).then(() => {
-        this.editSuccessNotify()
-        this.loading = false
-        this.afterEditMethod()
-        this.cancel()
-        this.init()
-      }).catch(() => {
-        this.loading = false
-      })
+      this.crudMethod
+        .edit(this.form)
+        .then(() => {
+          this.editSuccessNotify()
+          this.loading = false
+          this.afterEditMethod()
+          this.cancel()
+          this.init()
+        })
+        .catch(() => {
+          this.loading = false
+        })
     },
     /**
      * 编辑后可以调用该方法
@@ -331,12 +341,14 @@ export default {
     downloadMethod() {
       this.beforeInit()
       this.downloadLoading = true
-      download(this.url + '/download', this.params).then(result => {
-        this.downloadFile(result, this.title + '数据', 'xlsx')
-        this.downloadLoading = false
-      }).catch(() => {
-        this.downloadLoading = false
-      })
-    }
-  }
+      download(this.url + '/download', this.params)
+        .then((result) => {
+          this.downloadFile(result, this.title + '数据', 'xlsx')
+          this.downloadLoading = false
+        })
+        .catch(() => {
+          this.downloadLoading = false
+        })
+    },
+  },
 }

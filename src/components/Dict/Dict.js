@@ -11,17 +11,19 @@ export default class Dict {
       throw new Error('need Dict names')
     }
     const ps = []
-    names.forEach(n => {
+    names.forEach((n) => {
       Vue.set(this.dict.dict, n, {})
       Vue.set(this.dict.label, n, {})
       Vue.set(this.dict, n, [])
-      ps.push(getDictDetail(n).then(data => {
-        this.dict[n].splice(0, 0, ...data.content)
-        data.content.forEach(d => {
-          Vue.set(this.dict.dict[n], d.value, d)
-          Vue.set(this.dict.label[n], d.value, d.label)
+      ps.push(
+        getDictDetail(n).then((data) => {
+          this.dict[n].splice(0, 0, ...data.content)
+          data.content.forEach((d) => {
+            Vue.set(this.dict.dict[n], d.value, d)
+            Vue.set(this.dict.label[n], d.value, d.label)
+          })
         })
-      }))
+      )
     })
     await Promise.all(ps)
     completeCallback()

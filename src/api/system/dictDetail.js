@@ -4,12 +4,12 @@ export function get(dictName) {
   const data = {
     dictName,
     page: 0,
-    size: 999
+    size: 999,
   }
   return request({
     url: 'api/dictDetail/query',
     method: 'get',
-    data
+    data,
   })
 }
 
@@ -17,12 +17,12 @@ export function getDictMap(dictName) {
   const params = {
     dictName,
     page: 0,
-    size: 9999
+    size: 9999,
   }
   return request({
     url: 'api/dictDetail/map',
     method: 'get',
-    params
+    params,
   })
 }
 
@@ -30,14 +30,14 @@ export function add(data) {
   return request({
     url: 'api/dictDetail/add',
     method: 'post',
-    data
+    data,
   })
 }
 
 export function del(id) {
   return request({
     url: 'api/dictDetail/delete/' + id,
-    method: 'delete'
+    method: 'delete',
   })
 }
 
@@ -45,7 +45,7 @@ export function edit(data) {
   return request({
     url: 'api/dictDetail/edit',
     method: 'put',
-    data
+    data,
   })
 }
 

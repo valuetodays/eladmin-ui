@@ -4,14 +4,14 @@ export function chart(data) {
   return request({
     url: 'api/metricDockerStats/chart',
     method: 'post',
-    data
+    data,
   })
 }
 export function add(data) {
   return request({
     url: 'api/metricDockerStats/add',
     method: 'post',
-    data
+    data,
   })
 }
 
@@ -19,7 +19,7 @@ export function del(ids) {
   return request({
     url: 'api/metricDockerStats/delete',
     method: 'post',
-    data: ids
+    data: ids,
   })
 }
 
@@ -27,7 +27,7 @@ export function edit(data) {
   return request({
     url: 'api/metricDockerStats/edit',
     method: 'post',
-    data
+    data,
   })
 }
 

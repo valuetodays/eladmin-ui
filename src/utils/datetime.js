@@ -5,7 +5,7 @@
  * 阿债 https://gitee.com/azhai/datetime.js
  */
 
-Date.prototype.toMidnight = function() {
+Date.prototype.toMidnight = function () {
   this.setHours(0)
   this.setMinutes(0)
   this.setSeconds(0)
@@ -13,34 +13,34 @@ Date.prototype.toMidnight = function() {
   return this
 }
 
-Date.prototype.daysAgo = function(days, midnight) {
+Date.prototype.daysAgo = function (days, midnight) {
   days = days ? days - 0 : 0
-  const date = new Date(this.getTime() - days * 8.64E7)
+  const date = new Date(this.getTime() - days * 8.64e7)
   return midnight ? date.toMidnight() : date
 }
 
-Date.prototype.monthBegin = function(offset) {
+Date.prototype.monthBegin = function (offset) {
   offset = offset ? offset - 0 : 0
   const days = this.getDate() - 1 - offset
   return this.daysAgo(days, true)
 }
 
-Date.prototype.quarterBegin = function() {
-  const month = this.getMonth() - this.getMonth() % 3
+Date.prototype.quarterBegin = function () {
+  const month = this.getMonth() - (this.getMonth() % 3)
   return new Date(this.getFullYear(), month, 1).toMidnight()
 }
 
-Date.prototype.yearBegin = function() {
+Date.prototype.yearBegin = function () {
   return new Date(this.getFullYear(), 0, 1).toMidnight()
 }
 
-Date.prototype.strftime = function(format, local) {
+Date.prototype.strftime = function (format, local) {
   if (!format) {
-    const str = new Date(this.getTime() + 2.88E7).toISOString()
+    const str = new Date(this.getTime() + 2.88e7).toISOString()
     return str.substr(0, 16).replace('T', ' ')
   }
   local = local && local.startsWith('zh') ? 'zh' : 'en'
-  const padZero = function(str, len) {
+  const padZero = function (str, len) {
     const pads = len - str.toString().length
     return (pads && pads > 0 ? '0'.repeat(pads) : '') + str
   }
@@ -51,7 +51,7 @@ Date.prototype.strftime = function(format, local) {
   format = format.replace('%r', '%H:%M:%S %p')
   format = format.replace('%c', '%a %b %e %H:%M:%S %Y')
   const _this = this
-  return format.replace(/%[A-Za-z%]/g, function(f) {
+  return format.replace(/%[A-Za-z%]/g, function (f) {
     let ans = f
     switch (f) {
       case '%%':
@@ -134,12 +134,12 @@ Date.prototype.strftime = function(format, local) {
         break
 
       case '%s':
-        ans = parseInt(_this.getTime() / 1E3)
+        ans = parseInt(_this.getTime() / 1e3)
         break
 
       case '%f':
         const ms = _this.getMilliseconds()
-        ans = padZero(ms * 1E3, 6)
+        ans = padZero(ms * 1e3, 6)
         break
 
       case '%P':
@@ -169,10 +169,10 @@ Date.prototype.strftime = function(format, local) {
   })
 }
 
-Date.prototype.humanize = function(local) {
+Date.prototype.humanize = function (local) {
   local = local && local.startsWith('zh') ? 'zh' : 'en'
   const result = this.strftime('', local)
-  const days = (Date.today() - this.toMidnight().getTime()) / 8.64E7
+  const days = (Date.today() - this.toMidnight().getTime()) / 8.64e7
   if (days <= -10 || days >= 10) {
     return result
   }
@@ -192,25 +192,38 @@ Date.prototype.humanize = function(local) {
 
 const local_labels = {
   monthes: {
-    english: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    english: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
     en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    zh: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+    zh: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
   },
   weekdays: {
     english: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    zh: ['日', '一', '二', '三', '四', '五', '六']
+    zh: ['日', '一', '二', '三', '四', '五', '六'],
   },
   meridians: {
     english: ['a.m.', 'p.m.'],
     en: ['AM', 'PM'],
-    zh: ['上午', '下午']
+    zh: ['上午', '下午'],
   },
   dayagos: {
     english: ['Today', 'Yesterday', 'Tomorrow', ' days ago', ' days late'],
     en: ['Today', 'Yesterday', 'Tomorrow', ' days ago', ' days late'],
-    zh: ['今天', '昨天', '明天', '天前', '天后']
-  }
+    zh: ['今天', '昨天', '明天', '天前', '天后'],
+  },
 }
 
 export default Date

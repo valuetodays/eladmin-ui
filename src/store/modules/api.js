@@ -19,8 +19,8 @@ const api = {
     // 文件上传
     fileUploadApi: baseUrl + '/api/localStorage',
     // baseUrl，
-    baseApi: baseUrl
-  }
+    baseApi: baseUrl,
+  },
 }
 
 export default api

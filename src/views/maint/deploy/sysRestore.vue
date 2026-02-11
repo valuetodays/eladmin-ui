@@ -21,7 +21,9 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button type="text" @click="cancel">取消</el-button>
-      <el-button v-permission="['admin','deploy:add']" :loading="submitLoading" type="primary" @click="doSubmit">确认</el-button>
+      <el-button v-permission="['admin', 'deploy:add']" :loading="submitLoading" type="primary" @click="doSubmit"
+        >确认</el-button
+      >
     </div>
     <!--分页组件-->
     <el-pagination
@@ -36,73 +38,72 @@
 </template>
 
 <script>
-import crud from '@/mixins/crud'
-import { reducte } from '@/api/maint/deployHistory'
-import DateRangePicker from '@/components/DateRangePicker'
-export default {
-  components: { DateRangePicker },
-  mixins: [crud],
-  props: {
-    appName: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {
-      submitLoading: false,
-      dialog: false,
-      history: [],
-      radio: '',
-      appNames: '',
-      selectIndex: ''
-    }
-  },
-  created() {
-    this.$nextTick(() => {
-      this.init()
-    })
-  },
-  methods: {
-    beforeInit() {
-      this.url = 'api/deployHistory'
-      this.deployId = this.$parent.deployId
-      if (this.deployId === '') {
-        return false
+  import crud from '@/mixins/crud'
+  import { reducte } from '@/api/maint/deployHistory'
+  import DateRangePicker from '@/components/DateRangePicker'
+  export default {
+    components: { DateRangePicker },
+    mixins: [crud],
+    props: {
+      appName: {
+        type: String,
+        default: '',
+      },
+    },
+    data() {
+      return {
+        submitLoading: false,
+        dialog: false,
+        history: [],
+        radio: '',
+        appNames: '',
+        selectIndex: '',
       }
-      this.sort = 'deployDate,desc'
-      this.params['deployId'] = this.deployId
-      return true
     },
-    showRow(row) {
-      this.radio = this.data.indexOf(row)
-      this.selectIndex = row.id
+    created() {
+      this.$nextTick(() => {
+        this.init()
+      })
     },
-    cancel() {
-      this.dialog = false
-      this.submitLoading = false
+    methods: {
+      beforeInit() {
+        this.url = 'api/deployHistory'
+        this.deployId = this.$parent.deployId
+        if (this.deployId === '') {
+          return false
+        }
+        this.sort = 'deployDate,desc'
+        this.params['deployId'] = this.deployId
+        return true
+      },
+      showRow(row) {
+        this.radio = this.data.indexOf(row)
+        this.selectIndex = row.id
+      },
+      cancel() {
+        this.dialog = false
+        this.submitLoading = false
+      },
+      doSubmit() {
+        if (this.selectIndex === '') {
+          this.$message.error('请选择要还原的备份')
+        } else {
+          this.submitLoading = true
+          reducte(JSON.stringify(this.data[this.radio]))
+            .then((res) => {
+              this.dialog = false
+              this.submitLoading = false
+              this.appNames = ''
+              this.$parent.crud.toQuery()
+            })
+            .catch((err) => {
+              this.submitLoading = false
+              console.log('error:' + err.response.data.message)
+            })
+        }
+      },
     },
-    doSubmit() {
-      if (this.selectIndex === '') {
-        this.$message.error('请选择要还原的备份')
-      } else {
-        this.submitLoading = true
-        reducte(JSON.stringify(this.data[this.radio]))
-          .then(res => {
-            this.dialog = false
-            this.submitLoading = false
-            this.appNames = ''
-            this.$parent.crud.toQuery()
-          })
-          .catch(err => {
-            this.submitLoading = false
-            console.log('error:' + err.response.data.message)
-          })
-      }
-    }
   }
-}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
