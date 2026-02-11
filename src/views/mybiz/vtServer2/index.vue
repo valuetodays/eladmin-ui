@@ -1,7 +1,7 @@
 <template>
   <base-crud-page
     :crud="crud"
-    :form="form"
+    :default-form="defaultForm"
     :permission="permission"
     :rules="rules"
     :search-fields="searchFields"
@@ -38,18 +38,17 @@ import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
 
-const defaultForm = { id: null, name: null, portBindings: null, timeZoneEnabled: 1, domain: null, httpsEnabled: null, imageName: null, enabled: null, createBy: null, updateBy: null, createTime: null, updateTime: null }
 export default {
   name: 'VtServer',
   components: { BaseCrudPage },
-  mixins: [presenter(), header(), form(defaultForm), crud()],
+  mixins: [presenter(), ],
   dicts: ['switch_status_1_0'],
   cruds() {
     return CRUD({ title: 'VtServerController', url: 'api/vtServer/query', idField: 'id', sort: 'id,desc', crudMethod: { ...crudVtServer }})
   },
   data() {
     return {
-      query: {},
+      defaultForm: { id: null, name: null, portBindings: null, timeZoneEnabled: 1, domain: null, httpsEnabled: null, imageName: null, enabled: null, createBy: null, updateBy: null, createTime: null, updateTime: null },
       permission: {
         add: ['admin', 'vtServer:add'],
         edit: ['admin', 'vtServer:edit'],

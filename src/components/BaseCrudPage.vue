@@ -109,21 +109,38 @@ import rrOperation from '@crud/RR.operation'
 import crudOperation from '@crud/CRUD.operation'
 import udOperation from '@crud/UD.operation'
 import pagination from '@crud/Pagination'
-
+import { presenter, header, form, crud } from '@crud/crud'
 export default {
   name: 'BaseCrudPage',
+  // 关键：在这里直接使用混入
+  // 注意：因为 form() 是一个返回 mixin 对象的函数，我们需要动态处理
+  mixins: [form(), header(), crud()],
   components: { rrOperation, crudOperation, udOperation, pagination },
   props: {
     crud: { type: Object, required: true },
-    form: { type: Object, required: true }, // 对应 mixin 里的 form
+    // 业务组件传进来的默认表单结构
+    defaultForm: { type: Object, default: () => ({}) },
     searchFields: { type: Array, default: () => [] },
     tableColumns: { type: Array, default: () => [] },
     formFields: { type: Array, default: () => [] },
     rules: { type: Object, default: () => ({}) },
     permission: { type: Object, default: () => ({}) }
   },
-  mounted() {
-    this.crud.registerVM('form', this)
+  // 模拟 CRUD.js 中 form() 混入的行为
+  beforeCreate() {
+    // 1. 寻找 crud 实例（如果 props 没传，就向上找）
+    this.crud = this.crud || lookupCrud(this)
+    // 2. 注册当前组件为 'form' 类型的 VM，占据第 4 个槽位 (index 为 3)
+    this.crud.registerVM('form', this, 3)
   },
+  created() {
+    // 覆盖混入中的 defaultForm
+    this.crud.defaultForm = this.defaultForm
+    this.crud.resetForm()
+  },
+  beforeDestroy() {
+    // 销毁时记得注销，避免影响其他页面
+    //this.crud.unregisterVM('form', this)
+  }
 }
 </script>
