@@ -123,24 +123,7 @@ export default {
     permission: { type: Object, default: () => ({}) }
   },
   mounted() {
-    /**
-     * 核心补丁：
-     * crud.findVM('form') 找到的是 VtServer.vue。
-     * 我们需要把 BaseCrudPage 这里的 el-form 引用，
-     * 强行挂载到 VtServer 的 $refs 上。
-     */
-    const parentVm = this.crud.findVM('form')
-    if (parentVm) {
-      // 将当前组件(BaseCrudPage)的 ref["form"] 赋值给父组件的 $refs["form"]
-      parentVm.$refs['form'] = this.$refs['form']
-    }
+    this.crud.registerVM('form', this)
   },
-  // 建议加上销毁前的清理，防止内存溢出或引用混乱
-  beforeDestroy() {
-    const parentVm = this.crud.findVM('form')
-    if (parentVm && parentVm.$refs['form'] === this.$refs['form']) {
-      delete parentVm.$refs['form']
-    }
-  }
 }
 </script>
