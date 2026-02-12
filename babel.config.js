@@ -3,13 +3,9 @@ const plugins = ['@vue/babel-plugin-transform-vue-jsx']
 if (process.env.NODE_ENV === 'production') {
   plugins.push('transform-remove-console')
 }
-
 module.exports = {
+  plugins: plugins,
   presets: [
-    ['@vue/cli-plugin-babel/preset', {
-      useBuiltIns: 'entry', // 或 'usage'
-      corejs: 3
-    }]
-  ],
-  plugins
-};
+    '@vue/app'
+  ]
+}
