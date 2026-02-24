@@ -83,7 +83,7 @@
       </el-table>
     </el-dialog>
 
-    <el-dialog :close-on-click-modal="false" :visible.sync="showKdjDataDlg" title="show stock by kdj" width="500px">
+    <el-dialog :close-on-click-modal="false" :visible.sync="showKdjDataDlg" title="show stock by kdj" width="700px">
       <div>
         <el-date-picker
           v-model="kdjDataQueryForm.statDate"
@@ -235,12 +235,12 @@
       downloadCci14DataAsExcel() {
         if (!this.cci14Data || this.cci14Data.length === 0) return;
         const fileName = 'cci14Data-' + this.cci14DataQueryForm.statDate + '.xlsx'
-        this.downloadDataAsExcel(cci14Data, ['code', 'name', 'statDate', 'cci14'], 'CCI14', fileName)
+        this.downloadDataAsExcel(this.cci14Data, ['code', 'name', 'statDate', 'cci14'], 'CCI14', fileName)
       },
       downloadKdjDataAsExcel() {
         if (!this.kdjData || this.kdjData.length === 0) return;
         const fileName = 'kdjData-' + this.kdjDataQueryForm.statDate + '.xlsx'
-        this.downloadDataAsExcel(kdjData, ['code', 'name', 'statDate', 'k', 'd', 'j'], 'kdj', fileName)
+        this.downloadDataAsExcel(this.kdjData, ['code', 'name', 'statDate', 'k', 'd', 'j'], 'kdj', fileName)
       },
       downloadDataAsExcel(dataList, headerArray, sheetName, fileName) {
         if (!dataList || dataList.length === 0) return;
