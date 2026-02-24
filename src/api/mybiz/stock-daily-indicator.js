@@ -23,5 +23,12 @@ export function getAllCciLt_100ByStatDate(data) {
     data,
   })
 }
+export function getStocksToBuyByKdj(data) {
+  return request({
+    url: 'api/stockDailyIndicator/getStocksToBuyByKdj',
+    method: 'post',
+    data,
+  })
+}
 
-export default { add, getAllCciLt_100ByStatDate, del }
+export default { add, getAllCciLt_100ByStatDate, getStocksToBuyByKdj, del }

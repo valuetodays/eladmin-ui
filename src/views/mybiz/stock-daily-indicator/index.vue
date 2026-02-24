@@ -13,6 +13,15 @@
           @click="toggleCci14DataDlg()"
           >获取指定时间内cci14小于-100的数据
         </el-button>
+        <el-button
+          slot="right"
+          v-permission="['admin', 'stockDailyIndicator:getStockToBuyByKdj']"
+          class="filter-item"
+          size="mini"
+          type="primary"
+          @click="toggleKdjDataDlg()"
+          >根据kdj获取超买
+        </el-button>
       </crudOperation>
       <!--表格渲染-->
       <el-table
@@ -73,6 +82,40 @@
         <el-table-column prop="cci14" label="cci14" sortable="custom" />
       </el-table>
     </el-dialog>
+
+    <el-dialog :close-on-click-modal="false" :visible.sync="showKdjDataDlg" title="show stock by kdj" width="500px">
+      <div>
+        <el-date-picker
+          v-model="kdjDataQueryForm.statDate"
+          type="date"
+          placeholder="请选择日期"
+          value-format="yyyy-MM-dd"
+          clearable
+          style="width: 185px"
+          class="filter-item"
+          @change="kdjDataQuery"
+        />
+        <el-button size="mini" type="primary" @click="downloadAsExcel()" :disabled="kdjData.length === 0"
+          >下载为Excel</el-button
+        >
+      </div>
+      <el-table
+        ref="kdjTable"
+        v-loading="kdjDataloading"
+        :data="kdjData"
+        size="small"
+        height="400"
+        @sort-change="handleSortChange"
+        style="width: 100%"
+      >
+        <el-table-column prop="code" label="code" sortable="custom" />
+        <el-table-column prop="name" label="name" />
+        <el-table-column prop="statDate" label="统计日期" />
+        <el-table-column prop="k" label="k" sortable="custom" />
+        <el-table-column prop="d" label="d" sortable="custom" />
+        <el-table-column prop="j" label="j" sortable="custom" />
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -111,9 +154,15 @@
         cci14DataQueryForm: {
           statDate: '',
         },
+        kdjDataQueryForm: {
+          statDate: '',
+        },
         showCci14DataDlg: false,
         cci14Data: [],
         cci14Dataloading: false,
+        showKdjDataDlg: false,
+        kdjData: [],
+        kdjDataloading: false,
       }
     },
     methods: {
@@ -127,6 +176,9 @@
       toggleCci14DataDlg() {
         this.showCci14DataDlg = !this.showCci14DataDlg
       },
+      toggleKdjDataDlg() {
+        this.showKdjDataDlg = !this.showKdjDataDlg
+      },
       cci14DataQuery() {
         this.cci14Dataloading = true
         crudStockDailyIndicator
@@ -138,6 +190,19 @@
           .catch(() => {
             this.$message.error('操作失败')
             this.cci14Dataloading = false
+          })
+      },
+      kdjDataQuery() {
+        this.kdjDataloading = true
+        crudStockDailyIndicator
+          .getStocksToBuyByKdj(this.kdjDataQueryForm)
+          .then((data) => {
+            this.kdjData = data
+            this.kdjDataloading = false
+          })
+          .catch(() => {
+            this.$message.error('操作失败')
+            this.kdjDataloading = false
           })
       },
       downloadCci14DataAsCsv() {
@@ -161,10 +226,27 @@
       },
       // 下载 Excel
       downloadAsExcel() {
-        if (!this.cci14Data || this.cci14Data.length === 0) return
+        if (this.showCci14DataDlg) {
+          this.downloadCci14DataAsExcel();
+        } else if (this.showKdjDataDlg) {
+          this.downloadKdjDataAsExcel();
+        }
+      }, // end of downloadAsExcel()
+      downloadCci14DataAsExcel() {
+        if (!this.cci14Data || this.cci14Data.length === 0) return;
+        const fileName = 'cci14Data-' + this.cci14DataQueryForm.statDate + '.xlsx'
+        this.downloadDataAsExcel(cci14Data, ['code', 'name', 'statDate', 'cci14'], 'CCI14', fileName)
+      },
+      downloadKdjDataAsExcel() {
+        if (!this.kdjData || this.kdjData.length === 0) return;
+        const fileName = 'kdjData-' + this.kdjDataQueryForm.statDate + '.xlsx'
+        this.downloadDataAsExcel(kdjData, ['code', 'name', 'statDate', 'k', 'd', 'j'], 'kdj', fileName)
+      },
+      downloadDataAsExcel(dataList, headerArray, sheetName, fileName) {
+        if (!dataList || dataList.length === 0) return;
 
         // 生成 worksheet
-        const ws = XLSX.utils.json_to_sheet(this.cci14Data, { header: ['code', 'name', 'statDate', 'cci14'] })
+        const ws = XLSX.utils.json_to_sheet(dataList, { header: headerArray })
 
         // 强制 code 列为文本，防止 Excel 去掉前导零
         Object.keys(ws).forEach((cell) => {
@@ -173,13 +255,12 @@
 
         // 创建 workbook 并追加 worksheet
         const wb = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(wb, ws, 'CCI14')
+        XLSX.utils.book_append_sheet(wb, ws, sheetName)
 
         // 导出 Excel
         const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-        const fileName = 'cci14Data-' + this.cci14DataQueryForm.statDate + '.xlsx'
         saveAs(new Blob([wbout], { type: 'application/octet-stream' }), fileName)
-      }, // end of downloadAsExcel()
+      },
       handleSortChange({ prop, order }) {
         if (!order) return // 取消排序
         this.cci14Data.sort((a, b) => {
