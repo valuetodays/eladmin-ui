@@ -38,7 +38,7 @@
         <el-table-column prop="cci14" label="cci14" />
         <el-table-column prop="kdjK" label="k" />
         <el-table-column prop="kdjD" label="d" />
-        <el-table-column prop="kdjj" label="j" />
+        <el-table-column prop="kdjJ" label="j" />
         <el-table-column
           v-if="checkPer(['admin', 'stockDailyIndicator:edit', 'stockDailyIndicator:del'])"
           label="操作"
