@@ -49,12 +49,6 @@
           title: [{ required: true, message: '标题不能为空', trigger: 'blur' }],
           domain: [{ required: true, message: '域名不能为空', trigger: 'blur' }],
         },
-        queryTypeOptions: [
-          { key: 'title', display_name: '标题' },
-          { key: 'domain', display_name: '域名' },
-          { key: 'remark', display_name: '备注' },
-        ],
-
         defaultForm: {
           id: null, title: null, domain: null, remark: null  
         },
