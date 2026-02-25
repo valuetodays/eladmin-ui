@@ -266,17 +266,25 @@
       },
       handleSortChange({ prop, order }) {
         if (!order) return // 取消排序
-        this.cci14Data.sort((a, b) => {
-          let valA = a[prop]
-          let valB = b[prop]
-          if (typeof valA === 'string') valA = valA.toLowerCase()
-          if (typeof valB === 'string') valB = valB.toLowerCase()
-          if (order === 'ascending') {
-            return valA > valB ? 1 : -1
-          } else {
-            return valA < valB ? 1 : -1
-          }
-        })
+        let dataList = null;
+        if (this.showCci14DataDlg) {
+          dataList = this.cci14Data
+        } else if (this.showKdjDataDlg) {
+          dataList = this.kdjData
+        }
+        if (dataList) {
+          dataList.sort((a, b) => {
+            let valA = a[prop]
+            let valB = b[prop]
+            if (typeof valA === 'string') valA = valA.toLowerCase()
+            if (typeof valB === 'string') valB = valB.toLowerCase()
+            if (order === 'ascending') {
+              return valA > valB ? 1 : -1
+            } else {
+              return valA < valB ? 1 : -1
+            }
+          })
+        }
       },
     }, // end of methods
   }
