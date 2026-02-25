@@ -1,111 +1,34 @@
 <template>
-  <div class="app-container">
-    <!--工具栏-->
-    <div class="head-container">
-      <div v-if="crud.props.searchToggle">
-        <!-- 搜索 -->
-        <label class="el-form-item-label">标题</label>
-        <el-input
-          v-model="query.title"
-          clearable
-          placeholder="标题"
-          style="width: 185px"
-          class="filter-item"
-          @keyup.enter.native="crud.toQuery"
-        />
-        <label class="el-form-item-label">域名</label>
-        <el-input
-          v-model="query.domain"
-          clearable
-          placeholder="域名"
-          style="width: 185px"
-          class="filter-item"
-          @keyup.enter.native="crud.toQuery"
-        />
-        <label class="el-form-item-label">备注</label>
-        <el-input
-          v-model="query.remark"
-          clearable
-          placeholder="备注"
-          style="width: 185px"
-          class="filter-item"
-          @keyup.enter.native="crud.toQuery"
-        />
-        <rrOperation :crud="crud" />
-      </div>
-      <!--如果想在工具栏加入更多按钮，可以使用插槽方式， slot = 'left' or 'right'-->
-      <crudOperation :permission="permission" />
-      <!--表单组件-->
-      <el-dialog
-        :close-on-click-modal="false"
-        :before-close="crud.cancelCU"
-        :visible.sync="crud.status.cu > 0"
-        :title="crud.status.title"
-        width="500px"
-      >
-        <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-          <el-form-item label="主键">
-            <el-input v-model="form.id" style="width: 370px" />
-          </el-form-item>
-          <el-form-item label="标题" prop="title">
-            <el-input v-model="form.title" style="width: 370px" />
-          </el-form-item>
-          <el-form-item label="域名" prop="domain">
-            <el-input v-model="form.domain" style="width: 370px" />
-          </el-form-item>
-          <el-form-item label="备注">
-            <el-input v-model="form.remark" :rows="3" type="textarea" style="width: 370px" />
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button type="text" @click="crud.cancelCU">取消</el-button>
-          <el-button :loading="crud.status.cu === 2" type="primary" @click="crud.submitCU">确认</el-button>
-        </div>
-      </el-dialog>
-      <!--表格渲染-->
-      <el-table
-        ref="table"
-        v-loading="crud.loading"
-        :data="crud.data"
-        size="small"
-        style="width: 100%"
-        @selection-change="crud.selectionChangeHandler"
-      >
-        <el-table-column type="selection" width="55" />
-        <el-table-column prop="id" label="主键" />
-        <el-table-column prop="title" label="标题" />
-        <el-table-column prop="domain" label="域名" />
-        <el-table-column prop="remark" label="备注" />
-        <el-table-column
-          v-if="checkPer(['admin', 'httpsDomain:edit', 'httpsDomain:del'])"
-          label="操作"
-          width="150px"
-          align="center"
-        >
-          <template slot-scope="scope">
-            <udOperation :data="scope.row" :permission="permission" />
-          </template>
-        </el-table-column>
-      </el-table>
-      <!--分页组件-->
-      <pagination />
-    </div>
-  </div>
+    <base-crud-page
+    :crud="crud"
+    :default-form="defaultForm"
+    :permission="permission"
+    :rules="rules"
+    :search-fields="searchFields"
+    :table-columns="tableColumns"
+    :form-fields="formFields"
+  >
+    <template #table-operation="{ row }">
+      <el-dropdown size="mini" type="primary">
+        <el-button type="primary" size="mini"> 更多<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.native="testMenu1(row.id)"> 测试菜单一 </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </template>
+  </base-crud-page>
 </template>
 
 <script>
-  import crudHttpsDomain from '@/api/mybiz/https-domain'
+  import BaseCrudPage from '@/components/BaseCrudPage.vue'
   import CRUD, { presenter, header, form, crud } from '@crud/crud'
-  import rrOperation from '@crud/RR.operation'
-  import crudOperation from '@crud/CRUD.operation'
-  import udOperation from '@crud/UD.operation'
-  import pagination from '@crud/Pagination'
+  import crudHttpsDomain from '@/api/mybiz/https-domain'
 
   const defaultForm = { id: null, title: null, domain: null, remark: null }
   export default {
     name: 'HttpsDomain',
-    components: { pagination, crudOperation, rrOperation, udOperation },
-    mixins: [presenter(), header(), form(defaultForm), crud()],
+    components: { BaseCrudPage },
+    mixins: [presenter()],
     cruds() {
       return CRUD({
         title: 'https域名管理',
@@ -131,6 +54,32 @@
           { key: 'domain', display_name: '域名' },
           { key: 'remark', display_name: '备注' },
         ],
+
+        defaultForm: {
+          id: null, title: null, domain: null, remark: null  
+        },
+        searchFields: [
+          { label: '标题', prop: 'title', props: { clearable: true, size: 'small', style: 'width:185px' } },
+          { label: '域名', prop: 'domain', props: { clearable: true, size: 'small', style: 'width:185px' } },
+          { label: '备注', prop: 'remark', props: { clearable: true, size: 'small', style: 'width:185px' } },
+        ],
+        tableColumns: [
+          { prop: 'id', label: 'ID' },
+          { prop: 'title', label: '标题' },
+          { prop: 'domain', label: '域名' },
+          { prop: 'remark', label: '备注' },
+        ],
+        formFields: [
+          { label: '名称', prop: 'id', },
+          { label: '标题', prop: 'title', },
+          { label: '域名', prop: 'domain', },
+          {
+            label: '备注',
+            prop: 'remark',
+            type: 'el-input',
+            props: { rows: 3, type: 'textarea', style: 'width:370px' },
+          },
+        ]
       }
     },
     methods: {
@@ -140,6 +89,9 @@
       },
       [CRUD.HOOK.beforeToAdd]() {
         return true
+      },
+      testMenu1(id) {
+        this.$message.success('testMenu1: ' + id)
       },
     },
   }
