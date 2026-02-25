@@ -34,7 +34,6 @@
         <el-button type="primary" size="mini"> 更多<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item @click.native="saveAllDailyStat(row.id)"> 同步所有日k数据 </el-dropdown-item>
-          <el-dropdown-item @click.native="updateMissingFields(row.id)"> 同步指数信息 </el-dropdown-item>
           <el-dropdown-item @click.native="computeAllCciById(row.id)"> 计算所有cci </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
