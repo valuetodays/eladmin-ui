@@ -18,4 +18,6 @@ eladmin-web名称有歧义，可以代表后端服务，也可以代表前端页
   + [x] 查询条件配置化v2
   + [x] 列表项配置化v2
   + [x] 新增/修改表单项配置化v2
+  + [ ] 缺少DatePicker
 - 格式化代码 `npm run prettier`
+  
