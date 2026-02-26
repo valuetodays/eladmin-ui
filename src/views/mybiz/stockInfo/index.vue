@@ -8,7 +8,7 @@
     :table-columns="tableColumns"
     :form-fields="formFields"
   >
-    <template #crud-operation-more>
+    <template #crud-operation-more-right>
       <el-button
           slot="right"
           v-permission="['admin', 'stockInfo:saveLatest30Days']"

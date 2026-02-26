@@ -25,7 +25,12 @@
 
       <crudOperation :permission="permission" >
         <!-- 透传父组件传入的插槽 -->
-        <slot name="crud-operation-more" />
+        <template #left>
+          <slot name="crud-operation-more-left" />
+        </template>
+        <template #right>
+          <slot name="crud-operation-more-right" />
+        </template>
       </crudOperation>
     </div>
 
